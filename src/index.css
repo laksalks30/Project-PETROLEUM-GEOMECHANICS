@@ -1,0 +1,220 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-primary:   #0a1428;
+  --bg-card:      #0d1e3d;
+  --bg-card-2:    #112655;
+  --border:       rgba(59,130,246,0.2);
+  --border-hover: rgba(59,130,246,0.5);
+  --text-primary: #e2e8f0;
+  --text-muted:   #94a3b8;
+  --accent-green:  #22c55e;
+  --accent-yellow: #f59e0b;
+  --accent-red:    #ef4444;
+  --accent-blue:   #3b82f6;
+  --accent-purple: #a855f7;
+  --accent-cyan:   #06b6d4;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body, #root {
+  height: 100%;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 13px;
+  overflow: hidden;
+}
+
+/* ── Scrollbar ─────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #0d1e3d; }
+::-webkit-scrollbar-thumb { background: #163070; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #3b82f6; }
+
+/* ── Cards ─────────────────────────────────────────── */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.card:hover {
+  border-color: var(--border-hover);
+  box-shadow: 0 0 16px rgba(59,130,246,0.08);
+}
+.card-title {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border);
+  padding: 6px 10px;
+}
+
+/* ── KPI ───────────────────────────────────────────── */
+.kpi-value {
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.01em;
+}
+.kpi-unit {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-left: 2px;
+}
+
+/* ── Badges ────────────────────────────────────────── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 7px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.badge-green  { background: rgba(34,197,94,0.15);   color: #22c55e; border: 1px solid rgba(34,197,94,0.3); }
+.badge-yellow { background: rgba(245,158,11,0.15);  color: #f59e0b; border: 1px solid rgba(245,158,11,0.3); }
+.badge-red    { background: rgba(239,68,68,0.15);   color: #ef4444; border: 1px solid rgba(239,68,68,0.3); }
+.badge-blue   { background: rgba(59,130,246,0.15);  color: #3b82f6; border: 1px solid rgba(59,130,246,0.3); }
+.badge-purple { background: rgba(168,85,247,0.15);  color: #a855f7; border: 1px solid rgba(168,85,247,0.3); }
+
+/* ── Alert boxes ───────────────────────────────────── */
+.alert-red {
+  background: rgba(239,68,68,0.08);
+  border: 1px solid rgba(239,68,68,0.3);
+  border-radius: 6px;
+  padding: 8px 10px;
+  font-size: 11px;
+  color: #fca5a5;
+}
+.alert-yellow {
+  background: rgba(245,158,11,0.08);
+  border: 1px solid rgba(245,158,11,0.3);
+  border-radius: 6px;
+  padding: 8px 10px;
+  font-size: 11px;
+  color: #fcd34d;
+}
+
+/* ── Tables ────────────────────────────────────────── */
+.tbl { width: 100%; border-collapse: collapse; font-size: 11px; }
+.tbl th {
+  background: rgba(59,130,246,0.08);
+  color: var(--text-muted);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-size: 9px;
+  padding: 4px 8px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+.tbl td {
+  padding: 4px 8px;
+  border-bottom: 1px solid rgba(59,130,246,0.06);
+  color: var(--text-primary);
+}
+.tbl tr:last-child td { border-bottom: none; }
+.tbl tr:hover td { background: rgba(59,130,246,0.04); }
+.tbl .total-row td { font-weight: 700; color: #3b82f6; background: rgba(59,130,246,0.06); }
+
+/* ── Sidebar nav item ──────────────────────────────── */
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+  color: var(--text-muted);
+  transition: all 0.15s;
+}
+.nav-item:hover { background: rgba(59,130,246,0.1); color: #93c5fd; }
+.nav-item.active {
+  background: rgba(59,130,246,0.2);
+  color: #3b82f6;
+  border-left: 2px solid #3b82f6;
+  font-weight: 600;
+}
+
+/* ── Glow effects ──────────────────────────────────── */
+.glow-blue   { box-shadow: 0 0 12px rgba(59,130,246,0.25); }
+.glow-green  { box-shadow: 0 0 12px rgba(34,197,94,0.25); }
+.glow-red    { box-shadow: 0 0 12px rgba(239,68,68,0.25); }
+.glow-purple { box-shadow: 0 0 12px rgba(168,85,247,0.25); }
+
+/* ── Data row ──────────────────────────────────────── */
+.data-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 0;
+  border-bottom: 1px solid rgba(59,130,246,0.06);
+  font-size: 11px;
+}
+.data-row:last-child { border-bottom: none; }
+.data-row .label { color: var(--text-muted); }
+.data-row .value { font-weight: 600; color: var(--text-primary); }
+
+/* ── Animations ────────────────────────────────────── */
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.5; transform: scale(0.8); }
+}
+.pulse-dot { animation: pulse-dot 2s ease-in-out infinite; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.fade-in { animation: fadeIn 0.4s ease-out both; }
+
+/* ── Scrollable panel ──────────────────────────────── */
+.panel-scroll { overflow-y: auto; max-height: 100%; }
+
+/* ── Grid MEM summary ──────────────────────────────── */
+.mem-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+.mem-cell {
+  background: rgba(59,130,246,0.05);
+  border: 1px solid rgba(59,130,246,0.1);
+  border-radius: 5px;
+  padding: 6px 8px;
+}
+.mem-cell .mc-label { font-size: 9px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+.mem-cell .mc-value { font-size: 13px; font-weight: 700; margin-top: 1px; }
+
+/* ── Risk Matrix ───────────────────────────────────── */
+.risk-cell {
+  width: 32px;
+  height: 32px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
+  cursor: default;
+  transition: transform 0.15s;
+}
+.risk-cell:hover { transform: scale(1.15); }
+
+/* ── Fracture diagram ──────────────────────────────── */
+.fracture-svg { filter: drop-shadow(0 0 8px rgba(168,85,247,0.4)); }

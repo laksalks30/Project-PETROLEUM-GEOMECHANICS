@@ -1,0 +1,115 @@
+  {
+    "well": {
+      "name": "TEST-02-OPTIMIZED",
+      "field": "Blue Horizon",
+      "date": "03 Aug 2026",
+      "mem_version": "MEM-BH02-V2.0",
+      "status": "Calibrated",
+      "tvd_ft": 10500,
+      "md_ft": 11000,
+      "inclination_deg": 90.0,
+      "azimuth_deg": 45.0,
+      "hole_size_in": 8.50,
+      "reservoir_top_ft": 10400,
+      "reservoir_base_ft": 10480,
+      "net_pay_ft": 80,
+      "formation": "Limestone",
+      "temperature_f": 250
+    },
+    "logs": {
+      "Dtp": 75,
+      "Dts": 140,
+      "rho": 2.55
+    },
+    "mem": {
+      "Pp_psi": 5500,
+      "Sv_psi": 10800,
+      "Shmin_psi": 7500,
+      "SHmax_psi": 8900,
+      "stress_azimuth": "N45E",
+      "E_static_MMpsi": 3.10,
+      "nu_static": 0.25,
+      "UCS_psi": 5000,
+      "T0_psi": 500,
+      "friction_angle_deg": 32,
+      "Biot": 1.00,
+      "KIC_psi_sqin": 1200,
+      "permeability_mD": 1.5
+    },
+    "dfit": {
+      "breakdown_psi": 8200,
+      "ISIP_psi": 7800,
+      "closure_psi": 7500,
+      "reservoir_pressure_psi": 5500,
+      "injected_volume_bbl": 100,
+      "injection_rate_bpm": 10.0
+    },
+    "design": {
+      "total_fluid_bbl": 2800,
+      "avg_pump_rate_bpm": 18.0,
+      "duration_min_low": 120,
+      "duration_min_high": 140,
+      "total_proppant_lb": 350000,
+      "avg_conc_lb_gal": 3.0,
+      "clusters": 4,
+      "shots_per_cluster": 6,
+      "total_perforations": 24,
+      "flow_per_cluster_bpm": 4.5,
+      "flow_per_perforation_bpm": 0.75,
+      "perf_diameter_in": 0.40,
+      "phasing_deg": 60,
+      "rate_per_hole_bpm": 0.75,
+      "fracture_height_ft": 110,
+      "Pnet_psi": 800,
+      "DeltaPperf_psi": 500,
+      "DeltaPNWB_psi": 300,
+      "MWf": 8.5,
+      "DeltaPtubing_psi": 1000,
+      "efficiency": 0.65,
+      "fault_distance_ft": 1200
+    },
+    "pumping_schedule": [
+      {"stage": "Pad",       "fluid_bbl": 500, "rate_bpm": 18.0, "proppant_lb_gal": 0.0,  "proppant_lb": 0},
+      {"stage": "Ramp 1",   "fluid_bbl": 600, "rate_bpm": 18.0, "proppant_lb_gal": 1.5,  "proppant_lb": 37800},
+      {"stage": "Ramp 2",   "fluid_bbl": 600, "rate_bpm": 18.0, "proppant_lb_gal": 3.0,  "proppant_lb": 75600},
+      {"stage": "Ramp 3",   "fluid_bbl": 600, "rate_bpm": 18.0, "proppant_lb_gal": 4.5,  "proppant_lb": 113400},
+      {"stage": "Tail-in",  "fluid_bbl": 500, "rate_bpm": 18.0, "proppant_lb_gal": 6.0,  "proppant_lb": 126000}
+    ],
+    "stress_profile": [
+      {"layer": "Upper Barrier", "tvd_ft": 10300, "Shmin_psi": 8800, "contrast_psi": 1300},
+      {"layer": "Reservoir",     "tvd_ft": 10450, "Shmin_psi": 7500, "contrast_psi": 0},
+      {"layer": "Lower Barrier", "tvd_ft": 10600, "Shmin_psi": 8600, "contrast_psi": 1100}
+    ],
+    "uncertainty": {
+      "Shmin":             {"P10": 7000,  "P50": 7500,  "P90": 8000,  "unit": "psi"},
+      "Breakdown":         {"P10": 7800,  "P50": 8200,  "P90": 8600,  "unit": "psi"},
+      "Half_length":       {"P10": 600,   "P50": 750,   "P90": 900,  "unit": "ft"},
+      "Surface_pressure":  {"P10": 4500,  "P50": 5200,  "P90": 5900,  "unit": "psi"},
+      "Fluid_efficiency":  {"P10": 0.50,  "P50": 0.65,  "P90": 0.75,  "unit": ""},
+      "Fracture_height":   {"P10": 90,    "P50": 110,   "P90": 135,   "unit": "ft"}
+    },
+    "sensitivity": {
+      "Net Pressure":           45,
+      "Fracture Height":        25,
+      "Plane-Strain Modulus":   15,
+      "Fluid Efficiency":        8,
+      "Fluid Volume":            5,
+      "Leakoff":                 2
+    },
+    "dfit_pressure_curve": [
+      {"time_min": 0,   "pressure_psi": 6000},
+      {"time_min": 2,   "pressure_psi": 8200},
+      {"time_min": 5,   "pressure_psi": 8000},
+      {"time_min": 10,  "pressure_psi": 7800},
+      {"time_min": 20,  "pressure_psi": 7600},
+      {"time_min": 30,  "pressure_psi": 7500},
+      {"time_min": 40,  "pressure_psi": 7200},
+      {"time_min": 60,  "pressure_psi": 6500},
+      {"time_min": 90,  "pressure_psi": 5500}
+    ],
+    "stress_vs_depth": [
+      {"tvd_ft": 10200, "Shmin_psi": 8800, "SHmax_psi": 10000, "Sv_psi": 10600, "Pp_psi": 5300},
+      {"tvd_ft": 10400, "Shmin_psi": 7500, "SHmax_psi": 8900,  "Sv_psi": 10800, "Pp_psi": 5500},
+      {"tvd_ft": 10600, "Shmin_psi": 8600, "SHmax_psi": 9800,  "Sv_psi": 11000, "Pp_psi": 5700}
+    ]
+  }
