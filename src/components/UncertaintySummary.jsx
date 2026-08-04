@@ -11,7 +11,7 @@ const PARAM_LABELS = {
 }
 
 export default function UncertaintySummary({ uncertainty }) {
-  if (!uncertainty) return <div className="card h-full animate-pulse"><div className="card-title">Uncertainty Summary</div></div>
+  if (!uncertainty) return <div className="card h-full animate-pulse" style={{ background: '#0a1428', border: '1px solid rgba(30,41,59,0.8)' }}><div className="card-title">LOADING UNCERTAINTY...</div></div>
 
   const rows = Object.entries(uncertainty).map(([key, val]) => ({
     param: PARAM_LABELS[key] || key,
@@ -22,30 +22,37 @@ export default function UncertaintySummary({ uncertainty }) {
   }))
 
   return (
-    <div className="card h-full flex flex-col" id="panel-uncertainty">
-      <div className="card-title flex items-center gap-2">
-        <BarChart2 size={10} />
-        Uncertainty Summary (P10/P50/P90)
+    <div className="card h-full flex flex-col overflow-hidden" id="panel-uncertainty" style={{ background: '#0a1428', border: '1px solid rgba(30,41,59,0.8)' }}>
+      {/* ── Header ───────────────────────────────────────────────────────── */}
+      <div className="flex items-center gap-2" style={{
+        padding: '8px 12px',
+        background: 'linear-gradient(90deg, rgba(56,189,248,0.1) 0%, transparent 100%)',
+        borderBottom: '1px solid rgba(56,189,248,0.15)',
+        borderLeft: '2px solid #38bdf8'
+      }}>
+        <BarChart2 size={12} color="#38bdf8" />
+        <span style={{ fontSize: 10, fontWeight: 800, color: '#f8fafc', letterSpacing: '0.08em' }}>UNCERTAINTY SUMMARY (P10/P50/P90)</span>
       </div>
-      <div className="flex-1 overflow-auto min-h-0">
-        <table className="tbl">
-          <thead>
+
+      <div className="flex-1 overflow-y-auto custom-scrollbar">
+        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+          <thead style={{ background: '#070f22', borderBottom: '1px solid rgba(30,41,59,0.8)', position: 'sticky', top: 0, zIndex: 10 }}>
             <tr>
-              <th>Parameter</th>
-              <th style={{ color: '#22c55e' }}>P10</th>
-              <th style={{ color: '#3b82f6' }}>P50</th>
-              <th style={{ color: '#ef4444' }}>P90</th>
-              <th>Unit</th>
+              <th style={{ color: '#64748b', fontWeight: 800, padding: '8px 10px', textAlign: 'left', fontSize: 8, letterSpacing: '0.05em' }}>PARAMETER</th>
+              <th style={{ color: '#22c55e', fontWeight: 800, padding: '8px 10px', textAlign: 'right', fontSize: 8, letterSpacing: '0.05em' }}>P10</th>
+              <th style={{ color: '#38bdf8', fontWeight: 800, padding: '8px 10px', textAlign: 'right', fontSize: 8, letterSpacing: '0.05em' }}>P50</th>
+              <th style={{ color: '#ef4444', fontWeight: 800, padding: '8px 10px', textAlign: 'right', fontSize: 8, letterSpacing: '0.05em' }}>P90</th>
+              <th style={{ color: '#64748b', fontWeight: 800, padding: '8px 10px', textAlign: 'left', fontSize: 8, letterSpacing: '0.05em' }}>UNIT</th>
             </tr>
           </thead>
           <tbody>
             {rows.map(({ param, P10, P50, P90, unit }) => (
-              <tr key={param}>
-                <td style={{ fontSize: 10 }}>{param}</td>
-                <td style={{ fontSize: 10, color: '#22c55e', fontWeight: 600 }}>{formatVal(P10)}</td>
-                <td style={{ fontSize: 10, color: '#3b82f6', fontWeight: 600 }}>{formatVal(P50)}</td>
-                <td style={{ fontSize: 10, color: '#ef4444', fontWeight: 600 }}>{formatVal(P90)}</td>
-                <td style={{ fontSize: 9, color: '#475569' }}>{unit || '—'}</td>
+              <tr key={param} className="hover:bg-blue-900/10 transition-colors" style={{ borderBottom: '1px solid rgba(255,255,255,0.02)' }}>
+                <td style={{ fontSize: 9, padding: '8px 10px', color: '#e2e8f0', fontWeight: 600 }}>{param.toUpperCase()}</td>
+                <td style={{ fontSize: 10, color: '#22c55e', fontWeight: 700, textAlign: 'right', padding: '8px 10px' }}>{formatVal(P10)}</td>
+                <td style={{ fontSize: 10, color: '#38bdf8', fontWeight: 700, textAlign: 'right', padding: '8px 10px' }}>{formatVal(P50)}</td>
+                <td style={{ fontSize: 10, color: '#ef4444', fontWeight: 700, textAlign: 'right', padding: '8px 10px' }}>{formatVal(P90)}</td>
+                <td style={{ fontSize: 8, color: '#64748b', fontWeight: 700, padding: '8px 10px' }}>{unit || '—'}</td>
               </tr>
             ))}
           </tbody>
@@ -57,6 +64,7 @@ export default function UncertaintySummary({ uncertainty }) {
 
 function formatVal(v) {
   if (v === undefined || v === null) return '—'
-  if (typeof v === 'number' && v >= 1) return v.toLocaleString()
+  if (typeof v === 'number' && v >= 1) return v.toLocaleString(undefined, { maximumFractionDigits: 1 })
+  if (typeof v === 'number') return v.toFixed(2)
   return v
 }

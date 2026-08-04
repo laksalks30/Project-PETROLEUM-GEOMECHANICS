@@ -7,30 +7,38 @@ let mainWindow
 let backendProcess
 const BACKEND_PORT = 8000
 const FRONTEND_PORT = 5173
-const isDev = process.env.NODE_ENV !== 'production'
+
+// app.isPackaged is the ONLY reliable way to detect production in Electron
+// process.env.NODE_ENV is NOT guaranteed to be set in packaged builds
+const isDev = !app.isPackaged
 
 // ── Backend startup ────────────────────────────────────────────────────────────
 function startBackend() {
-  const backendDir = path.join(__dirname, '..', 'backend')
+  let pythonCmd, args, backendCwd
 
-  // Try python3 first, fallback to python
-  const pythonCmd = process.platform === 'win32' ? 'python' : 'python3'
+  if (isDev) {
+    // Development: call python directly
+    const backendDir = path.join(__dirname, '..', 'backend')
+    pythonCmd = process.platform === 'win32' ? 'python' : 'python3'
+    args = ['-m', 'uvicorn', 'main:app', '--host', '127.0.0.1', '--port', String(BACKEND_PORT), '--log-level', 'info']
+    backendCwd = backendDir
+  } else {
+    // Production: run bundled PyInstaller binary
+    const exeDir = path.join(process.resourcesPath, 'hf_backend')
+    pythonCmd = path.join(exeDir, 'hf_backend.exe')
+    args = []
+    backendCwd = exeDir
+  }
 
-  backendProcess = spawn(pythonCmd, [
-    '-m', 'uvicorn', 'main:app',
-    '--host', '127.0.0.1',
-    '--port', String(BACKEND_PORT),
-    '--log-level', 'info',
-  ], {
-    cwd: backendDir,
-    shell: process.platform === 'win32',
+  backendProcess = spawn(pythonCmd, args, {
+    cwd: backendCwd,
+    shell: false,
     stdio: ['ignore', 'pipe', 'pipe'],
     env: { ...process.env, PYTHONUNBUFFERED: '1' },
   })
 
   backendProcess.stdout?.on('data', d => console.log('[backend]', d.toString().trim()))
   backendProcess.stderr?.on('data', d => console.error('[backend]', d.toString().trim()))
-
   backendProcess.on('error', err => console.error('Failed to start backend:', err))
   backendProcess.on('close', code => console.log('Backend exited with code', code))
 
@@ -91,7 +99,7 @@ function createWindow() {
 
   const url = isDev
     ? `http://localhost:${FRONTEND_PORT}`
-    : `file://${path.join(__dirname, '..', 'dist', 'index.html')}`
+    : `file://${path.join(__dirname, '..', 'dist', 'index.html').replace(/\\/g, '/')}`
 
   mainWindow.loadURL(url)
 
@@ -104,7 +112,7 @@ app.whenReady().then(async () => {
 
   try {
     console.log('Waiting for backend to be ready…')
-    await waitForBackend(40, 1000)
+    await waitForBackend(60, 1000)
     console.log('Backend is ready!')
   } catch (e) {
     console.warn('Backend not ready within timeout – opening UI anyway')

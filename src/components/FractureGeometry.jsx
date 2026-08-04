@@ -2,43 +2,49 @@ import React from 'react'
 import { GitBranch } from 'lucide-react'
 
 export default function FractureGeometry({ geometry }) {
-  if (!geometry) return <div className="card h-full animate-pulse"><div className="card-title">Fracture Geometry</div></div>
+  if (!geometry) return <div className="card h-full animate-pulse" style={{ background: '#0a1428' }}><div className="card-title">LOADING GEOMETRY...</div></div>
 
   const xf   = geometry.xf_ft || 855
   const hf   = geometry.hf_ft || 98
-  const wmax = geometry.wmax_in || 1.17
-  const wavg = geometry.wavg_in || 0.92
-  const wprop = geometry.wprop_in || 0.284
   const formatNum = (num, decimals = 2) => (num !== undefined && num !== null) ? Number(num).toLocaleString(undefined, { maximumFractionDigits: decimals }) : '—'
 
   const stats = [
-    { label: 'Max Width',             value: `${formatNum(geometry.wmax_in, 2)} in` },
-    { label: 'Avg Width',             value: `${formatNum(geometry.wavg_in, 2)} in` },
-    { label: 'Avg Propped Width',     value: `${formatNum(geometry.wprop_in, 3)} in` },
-    { label: 'Fracture Conductivity', value: `${formatNum(geometry.Cd ? geometry.Cd * 106 : 247, 0)} md-ft` },
-    { label: 'Fracture Area',         value: `${formatNum(geometry.Af_ft2, 0)} ft²` },
-    { label: 'Dimensionless Height',  value: formatNum(geometry.hf_ft / (geometry.total_length_ft || 1710), 2) },
-    { label: 'Geometry Model',        value: geometry.geometry_model || 'PKN' },
-    { label: 'Height Containment',    value: `${formatNum(geometry.height_containment_pct || 98, 0)}%` },
+    { label: 'MAX WIDTH',             value: `${formatNum(geometry.wmax_in, 2)} in` },
+    { label: 'AVG WIDTH',             value: `${formatNum(geometry.wavg_in, 2)} in` },
+    { label: 'PROPPED WIDTH',         value: `${formatNum(geometry.wprop_in, 3)} in` },
+    { label: 'FRACTURE CONDUCTIVITY', value: `${formatNum(geometry.fracture_conductivity_md_ft ?? (geometry.Cd ? geometry.Cd * 100 : 197), 0)} md-ft`, highlight: true },
+    { label: 'FRACTURE AREA',         value: `${formatNum(geometry.Af_ft2, 0)} ft²` },
+    { label: 'DIMENSIONLESS HEIGHT',  value: formatNum(geometry.hf_ft && geometry.xf_ft ? geometry.hf_ft / (2 * geometry.xf_ft) : 0, 3) },
+    { label: 'GEOMETRY MODEL',        value: geometry.geometry_model || 'PKN' },
+    { label: 'HEIGHT CONTAINMENT',    value: `${formatNum(geometry.height_containment_pct ?? 98, 0)}%`, highlight: true },
   ]
 
   return (
-    <div className="card h-full flex flex-col" id="panel-fracture-geometry" style={{ borderColor: 'rgba(59,130,246,0.3)' }}>
-      <div className="card-title text-[#38bdf8]" style={{ padding: '6px 10px', fontSize: 11, fontWeight: 700, letterSpacing: '0.05em' }}>
-        FRACTURE GEOMETRY <span style={{ color: '#94a3b8', fontWeight: 400 }}>(Design)</span>
+    <div className="card h-full flex flex-col overflow-hidden" id="panel-fracture-geometry" style={{ background: '#0a1428', border: '1px solid rgba(30,41,59,0.8)' }}>
+      {/* ── Header ───────────────────────────────────────────────────────── */}
+      <div className="flex items-center gap-2" style={{
+        padding: '8px 12px',
+        background: 'linear-gradient(90deg, rgba(56,189,248,0.1) 0%, transparent 100%)',
+        borderBottom: '1px solid rgba(56,189,248,0.15)',
+        borderLeft: '2px solid #38bdf8'
+      }}>
+        <GitBranch size={12} color="#38bdf8" />
+        <span style={{ fontSize: 10, fontWeight: 800, color: '#f8fafc', letterSpacing: '0.08em' }}>FRACTURE GEOMETRY</span>
+        <span style={{ fontSize: 9, color: '#64748b', fontWeight: 600, marginLeft: 4, letterSpacing: '0.05em' }}>(DESIGN)</span>
       </div>
-      <div className="flex-1 flex flex-row overflow-hidden border-t" style={{ borderColor: 'rgba(59,130,246,0.15)' }}>
-        {/* SVG Diagram */}
-        <div className="flex-1 relative bg-[#1a1c23]">
+
+      <div className="flex-1 flex flex-row overflow-hidden">
+        {/* SVG Diagram Area */}
+        <div className="flex-1 relative" style={{ background: '#1c1712' }}>
           <FractureDiagram xf={xf} hf={hf} total_length={geometry.total_length_ft || (xf * 2)} />
         </div>
         
-        {/* Stats Table */}
-        <div className="w-[170px] flex flex-col justify-center px-3 py-2 border-l" style={{ borderColor: 'rgba(59,130,246,0.15)', background: '#0a101f' }}>
+        {/* Stats Table Area */}
+        <div className="w-[175px] flex flex-col justify-center px-3 py-2 border-l" style={{ borderColor: 'rgba(30,41,59,0.8)', background: '#070f22' }}>
           {stats.map((s, i) => (
-            <div key={i} className="flex justify-between items-center py-1.5 border-b" style={{ borderColor: 'rgba(255,255,255,0.05)' }}>
-              <span style={{ fontSize: 9, color: '#cbd5e1' }}>{s.label}</span>
-              <span style={{ fontSize: 10, color: '#f8fafc', fontWeight: 600 }}>{s.value}</span>
+            <div key={i} className="flex justify-between items-center py-2 border-b" style={{ borderColor: 'rgba(255,255,255,0.04)' }}>
+              <span style={{ fontSize: 7.5, color: s.highlight ? '#38bdf8' : '#64748b', fontWeight: 700, letterSpacing: '0.05em', width: '55%' }}>{s.label}</span>
+              <span style={{ fontSize: 10, color: s.highlight ? '#f8fafc' : '#e2e8f0', fontWeight: 800, textAlign: 'right', width: '45%' }}>{s.value}</span>
             </div>
           ))}
         </div>
@@ -55,8 +61,7 @@ function FractureDiagram({ xf, hf, total_length }) {
   
   return (
     <svg width="100%" height="100%" viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMidYMid meet" style={{ display: 'block', background: '#1c1712' }}>
-      
-      {/* Background rock layers (brownish) */}
+      {/* Background rock layers */}
       <rect x="0" y="0" width={W} height={H} fill="#29221b" />
       <path d="M -10 60 Q 200 100 410 50" stroke="#1c150f" strokeWidth="6" fill="none" />
       <path d="M -10 140 Q 200 110 410 150" stroke="#1c150f" strokeWidth="6" fill="none" />
@@ -90,44 +95,39 @@ function FractureDiagram({ xf, hf, total_length }) {
       <rect x={cx - 10} y="0" width={20} height={H} fill="url(#pipeGrad)" stroke="#000" strokeWidth="1" />
       
       {/* Arrows and Labels */}
-      {/* Top Left: Fracture Height */}
       <g transform={`translate(${cx - fracW/3}, ${cy - fracH/2 - 25})`}>
-        <text x="0" y="-2" fill="#cbd5e1" fontSize="11" textAnchor="middle">Fracture Height</text>
+        <text x="0" y="-2" fill="#cbd5e1" fontSize="10" fontWeight="bold" letterSpacing="0.05em" textAnchor="middle">FRACTURE HEIGHT</text>
         <text x="0" y="12" fill="#ffffff" fontSize="13" fontWeight="bold" textAnchor="middle">{hf} ft</text>
         <line x1="0" y1="18" x2="0" y2="40" stroke="#f8fafc" strokeWidth="1.5" />
         <polygon points="-3,21 3,21 0,16" fill="#f8fafc" />
         <polygon points="-3,37 3,37 0,42" fill="#f8fafc" />
       </g>
 
-      {/* Left Half-Length */}
       <g transform={`translate(${cx - fracW/4}, ${cy + fracH/2 + 25})`}>
         <line x1={-fracW/4 + 10} y1="0" x2={fracW/4 - 12} y2="0" stroke="#f8fafc" strokeWidth="1.5" />
         <polygon points={`${-fracW/4 + 13},-3 ${-fracW/4 + 13},3 ${-fracW/4 + 8},0`} fill="#f8fafc" />
         <polygon points={`${fracW/4 - 15},-3 ${fracW/4 - 15},3 ${fracW/4 - 10},0`} fill="#f8fafc" />
-        <text x="0" y="-8" fill="#cbd5e1" fontSize="11" textAnchor="middle">Half-Length (xf)</text>
+        <text x="0" y="-8" fill="#cbd5e1" fontSize="10" fontWeight="bold" letterSpacing="0.05em" textAnchor="middle">HALF-LENGTH (xf)</text>
         <text x="0" y="16" fill="#ffffff" fontSize="13" fontWeight="bold" textAnchor="middle">{xf.toLocaleString()} ft</text>
       </g>
 
-      {/* Right Half-Length */}
       <g transform={`translate(${cx + fracW/4}, ${cy + fracH/2 + 25})`}>
         <line x1={-fracW/4 + 12} y1="0" x2={fracW/4 - 10} y2="0" stroke="#f8fafc" strokeWidth="1.5" />
         <polygon points={`${-fracW/4 + 15},-3 ${-fracW/4 + 15},3 ${-fracW/4 + 10},0`} fill="#f8fafc" />
         <polygon points={`${fracW/4 - 13},-3 ${fracW/4 - 13},3 ${fracW/4 - 8},0`} fill="#f8fafc" />
-        <text x="0" y="-8" fill="#cbd5e1" fontSize="11" textAnchor="middle">Half-Length (xf)</text>
+        <text x="0" y="-8" fill="#cbd5e1" fontSize="10" fontWeight="bold" letterSpacing="0.05em" textAnchor="middle">HALF-LENGTH (xf)</text>
         <text x="0" y="16" fill="#ffffff" fontSize="13" fontWeight="bold" textAnchor="middle">{xf.toLocaleString()} ft</text>
       </g>
 
-      {/* Boundary Lines for Total Length */}
       <line x1={cx - fracW/2} y1={cy + 5} x2={cx - fracW/2} y2={H - 12} stroke="#94a3b8" strokeWidth="1.5" strokeDasharray="4 3" />
       <line x1={cx + fracW/2} y1={cy + 5} x2={cx + fracW/2} y2={H - 12} stroke="#94a3b8" strokeWidth="1.5" strokeDasharray="4 3" />
 
-      {/* Bottom Total Length */}
       <g transform={`translate(${cx}, ${H - 12})`}>
         <line x1={-fracW/2 + 10} y1="0" x2={fracW/2 - 10} y2="0" stroke="#f8fafc" strokeWidth="1.5" />
         <polygon points={`${-fracW/2 + 13},-3 ${-fracW/2 + 13},3 ${-fracW/2 + 8},0`} fill="#f8fafc" />
         <polygon points={`${fracW/2 - 13},-3 ${fracW/2 - 13},3 ${fracW/2 - 8},0`} fill="#f8fafc" />
         <text x="0" y="4" fill="#f8fafc" fontSize="12" textAnchor="middle" fontWeight="bold">
-          <tspan fill="#cbd5e1" fontWeight="normal">Total Length </tspan>{total_length?.toLocaleString()} ft
+          <tspan fill="#94a3b8" fontSize="10" letterSpacing="0.05em">TOTAL LENGTH </tspan> {total_length?.toLocaleString()} ft
         </text>
       </g>
     </svg>

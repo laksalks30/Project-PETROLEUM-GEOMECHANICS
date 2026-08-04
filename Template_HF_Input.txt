@@ -1,0 +1,223 @@
+# ============================================================
+# HF DESIGN ENGINE — INPUT TEMPLATE (FORMAT: TXT / NOTEPAD)
+# ============================================================
+# PETUNJUK PENGISIAN:
+#   - Baris dimulai dengan '#' adalah komentar, tidak dibaca sistem.
+#   - Setiap seksi dimulai dengan [NAMA_SEKSI] dalam tanda kurung siku.
+#   - Format isian: nama_parameter = nilai
+#   - JANGAN mengubah nama parameter (sebelah kiri tanda '=').
+#   - Hanya ubah NILAI (sebelah kanan tanda '=').
+# ============================================================
+
+
+# ------------------------------------------------------------
+# SEKSI 1: DATA SUMUR (WELL)
+# Informasi identitas dan geometri sumur.
+# ------------------------------------------------------------
+[WELL]
+name            = GM-01
+field           = Green Meadow
+date            = 01 Jan 2025
+mem_version     = MEM-GM01-V1.0
+status          = Calibrated
+tvd_ft          = 10500
+md_ft           = 11000
+inclination_deg = 15
+azimuth_deg     = 45
+hole_size_in    = 8.5
+reservoir_top_ft  = 10400
+reservoir_base_ft = 10480
+net_pay_ft      = 80
+formation       = Sandstone
+temperature_f   = 230
+
+
+# ------------------------------------------------------------
+# SEKSI 2: DATA LOG SONIK (LOGS)
+# Data dari wireline logging untuk kalkulasi sifat elastis batuan.
+#   Dtp  = Compressional Wave Slowness (microsec/ft)
+#   Dts  = Shear Wave Slowness (microsec/ft)
+#   rho  = Bulk Density (g/cc)
+# ------------------------------------------------------------
+[LOGS]
+Dtp = 75.0
+Dts = 140.0
+rho = 2.55
+
+
+# ------------------------------------------------------------
+# SEKSI 3: MECHANICAL EARTH MODEL (MEM)
+# Parameter geomekanika yang telah dikalibrasi.
+#   Pp_psi          = Pore Pressure (psi)
+#   Sv_psi          = Vertical Stress / Overburden (psi)
+#   Shmin_psi       = Minimum Horizontal Stress (psi)
+#   SHmax_psi       = Maximum Horizontal Stress (psi)
+#   stress_azimuth  = Arah SHmax (contoh: N45E)
+#   E_static_MMpsi  = Young's Modulus Statis (million psi)
+#   nu_static       = Poisson's Ratio Statis (tidak berdimensi, 0-0.5)
+#   UCS_psi         = Unconfined Compressive Strength (psi)
+#   T0_psi          = Tensile Strength (psi)
+#   friction_angle_deg = Sudut Geser Dalam (derajat)
+#   Biot            = Biot Coefficient (0-1)
+#   KIC_psi_sqin    = Fracture Toughness (psi.in^0.5)
+#   permeability_mD = Permeabilitas (milliDarcy)
+# ------------------------------------------------------------
+[MEM]
+Pp_psi           = 5200
+Sv_psi           = 10500
+Shmin_psi        = 7200
+SHmax_psi        = 8700
+stress_azimuth   = N45E
+E_static_MMpsi   = 3.0
+nu_static        = 0.26
+UCS_psi          = 4800
+T0_psi           = 480
+friction_angle_deg = 30
+Biot             = 1.0
+KIC_psi_sqin     = 1150
+permeability_mD  = 1.2
+
+
+# ------------------------------------------------------------
+# SEKSI 4: DATA DFIT / MINIFRAC
+# Hasil uji Diagnostic Fracture Injection Test.
+#   breakdown_psi        = Tekanan rekah awal (psi)
+#   ISIP_psi             = Instantaneous Shut-In Pressure (psi)
+#   closure_psi          = Tekanan penutupan fracture (psi)
+#   reservoir_pressure_psi = Tekanan reservoir terkonfirmasi (psi)
+#   injected_volume_bbl  = Volume fluida yang diinjeksikan (bbl)
+#   injection_rate_bpm   = Laju injeksi saat DFIT (bpm)
+# ------------------------------------------------------------
+[DFIT]
+breakdown_psi         = 8000
+ISIP_psi              = 7600
+closure_psi           = 7200
+reservoir_pressure_psi = 5200
+injected_volume_bbl   = 100
+injection_rate_bpm    = 10
+
+
+# ------------------------------------------------------------
+# SEKSI 5: PARAMETER DESAIN FRAEREKAH (DESIGN)
+# Parameter desain operasi utama.
+#   total_fluid_bbl       = Total volume fluida yang akan diinjeksikan (bbl)
+#   avg_pump_rate_bpm     = Rata-rata laju pompa (barrel per minute)
+#   total_proppant_lb     = Total massa proppant (pound)
+#   avg_conc_lb_gal       = Konsentrasi proppant rata-rata (lb/gallon)
+#   clusters              = Jumlah kluster perforasi per stage
+#   shots_per_cluster     = Jumlah tembakan per kluster
+#   perf_diameter_in      = Diameter perforasi (inch)
+#   phasing_deg           = Sudut orientasi perforasi (derajat)
+#   fracture_height_ft    = Tinggi fracture yang diperkirakan (ft)
+#   efficiency            = Efisiensi fluida (0.0 - 1.0)
+#   fault_distance_ft     = Jarak ke patahan terdekat (ft)
+#   MWf                   = Densitas fluida injeksi (ppg)
+# ------------------------------------------------------------
+[DESIGN]
+total_fluid_bbl       = 2500.0
+avg_pump_rate_bpm     = 16.0
+duration_min_low      = 115.0
+duration_min_high     = 135.0
+total_proppant_lb     = 300000.0
+avg_conc_lb_gal       = 2.8
+clusters              = 4.0
+shots_per_cluster     = 6.0
+total_perforations    = 24.0
+flow_per_cluster_bpm  = 4.0
+flow_per_perforation_bpm = 0.67
+perf_diameter_in      = 0.4
+phasing_deg           = 60.0
+rate_per_hole_bpm     = 0.67
+fracture_height_ft    = 100.0
+Pnet_psi              = 750.0
+DeltaPperf_psi        = 480.0
+DeltaPNWB_psi         = 280.0
+MWf                   = 8.5
+DeltaPtubing_psi      = 950.0
+efficiency            = 0.62
+fault_distance_ft     = 1500.0
+
+
+# ------------------------------------------------------------
+# SEKSI 6: SENSITIVITAS (SENSITIVITY)
+# Persentase pengaruh masing-masing parameter terhadap Xf (Half-Length).
+# Format: nama_parameter = angka_persen (0-100)
+# ------------------------------------------------------------
+[SENSITIVITY]
+Net Pressure         = 45
+Fracture Height      = 25
+Plane-Strain Modulus = 15
+Fluid Efficiency     = 8
+Fluid Volume         = 5
+Leakoff              = 2
+
+
+# ------------------------------------------------------------
+# SEKSI 7: KETIDAKPASTIAN (UNCERTAINTY)
+# Rentang nilai P10/P50/P90 untuk analisis risiko.
+# Format: nama_parameter = nilai_P10, nilai_P50, nilai_P90, satuan
+# ------------------------------------------------------------
+[UNCERTAINTY]
+Shmin            = 6800, 7200, 7700, psi
+Breakdown        = 7600, 8000, 8400, psi
+Half_length      = 550, 700, 850, ft
+Surface_pressure = 4300, 5000, 5700, psi
+Fluid_efficiency = 0.50, 0.62, 0.72,
+Fracture_height  = 85, 100, 125, ft
+
+
+# ------------------------------------------------------------
+# SEKSI 8: JADWAL PEMOMPAAN (PUMPING_SCHEDULE)
+# Data program pumping secara bertahap (stages).
+# Baris pertama WAJIB berisi nama kolom, dipisah koma.
+# Kolom: stage, fluid_bbl, rate_bpm, proppant_lb_gal, proppant_lb
+# ------------------------------------------------------------
+[PUMPING_SCHEDULE]
+stage,fluid_bbl,rate_bpm,proppant_lb_gal,proppant_lb
+Pad,250,16,0.0,0
+Ramp 1,400,16,1.0,26688
+Ramp 2,500,16,2.0,66720
+Ramp 3,600,16,3.5,133440
+Tail-in,750,16,5.0,200160
+
+
+# ------------------------------------------------------------
+# SEKSI 9: PROFIL STRESS PER LAPISAN (STRESS_PROFILE)
+# Data tekanan minimum horizontal per lapisan batuan.
+# Kolom: layer, tvd_ft, Shmin_psi, contrast_psi
+# ------------------------------------------------------------
+[STRESS_PROFILE]
+layer,tvd_ft,Shmin_psi,contrast_psi
+Upper Barrier,10300,8600,1400
+Reservoir,10440,7200,0
+Lower Barrier,10580,8400,1200
+
+
+# ------------------------------------------------------------
+# SEKSI 10: KURVA TEKANAN DFIT (DFIT_PRESSURE_CURVE)
+# Data time vs pressure dari uji DFIT untuk plotting grafik.
+# Kolom: time_min, pressure_psi
+# ------------------------------------------------------------
+[DFIT_PRESSURE_CURVE]
+time_min,pressure_psi
+0,5800
+2,8000
+5,7800
+10,7600
+20,7400
+30,7200
+
+
+# ------------------------------------------------------------
+# SEKSI 11: STRESS VS KEDALAMAN (STRESS_VS_DEPTH)
+# Data tekanan vs kedalaman untuk grafik stress profile.
+# Kolom: tvd_ft, Shmin_psi, SHmax_psi, Sv_psi, Pp_psi
+# ------------------------------------------------------------
+[STRESS_VS_DEPTH]
+tvd_ft,Shmin_psi,SHmax_psi,Sv_psi,Pp_psi
+10200,8600,9800,10400,5100
+10400,7200,8700,10500,5200
+
+# ============================================================
+# SELESAI — SIMPAN FILE INI, LALU UPLOAD KE APLIKASI
+# ============================================================

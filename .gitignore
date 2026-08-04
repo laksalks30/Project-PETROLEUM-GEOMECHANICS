@@ -7,3 +7,7 @@ __pycache__/
 .env
 *.log
 .DS_Store
+~$*.xlsx
+release/
+backend/build_tmp/
+backend/backend.spec

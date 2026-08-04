@@ -12,6 +12,8 @@ def calc_fracture_geometry(
     hf_ft: float = 98,
     efficiency: float = 0.70,
     V_injected_bbl: float = 3270,
+    k_res_md: float = 0.1,          # Reservoir permeability (md) - from MEM
+    kf_md: float = 50000.0,         # Proppant pack permeability (md) - 20/40 sand standard
 ) -> dict:
     """
     Calculate fracture geometry using PKN model.
@@ -50,8 +52,22 @@ def calc_fracture_geometry(
     # Fracture area
     Af_ft2 = 2 * xf_ft * hf_ft
 
-    # Dimensionless conductivity placeholder
-    Cd = round(efficiency / (1 - efficiency), 2) if efficiency < 1 else 0
+    # Proppant pack permeability and propped width proxy for conductivity
+    wprop_ft_approx = wavg_ft   # Use avg fracture width as propped width proxy
+
+    # Fracture Conductivity (md-ft) = kf * propped_width_ft
+    fracture_conductivity_md_ft = round(kf_md * wprop_ft_approx, 0)
+
+    # Dimensionless Fracture Conductivity: FCD = (kf * wf) / (k_reservoir * xf)
+    # k_reservoir default placeholder = 0.1 md if not provided
+    k_res_md = 0.1  # md (default; should come from MEM permeability data)
+    if xf_ft > 0 and k_res_md > 0:
+        FCD = (kf_md * wprop_ft_approx) / (k_res_md * xf_ft)
+    else:
+        FCD = 0.0
+
+    # Leakoff ratio (for reference only)
+    leakoff_ratio = round(efficiency / (1 - efficiency), 2) if efficiency < 1 else 0
 
     return {
         "Eprime_MMpsi": round(Eprime_MMpsi, 3),
@@ -64,7 +80,9 @@ def calc_fracture_geometry(
         "hf_ft": hf_ft,
         "Af_ft2": round(Af_ft2, 0),
         "efficiency": efficiency,
-        "Cd": Cd,
+        "Cd": round(FCD, 2),              # True Dimensionless Fracture Conductivity (FCD)
+        "leakoff_ratio": leakoff_ratio,   # Separate field, not misused as Cd
+        "fracture_conductivity_md_ft": fracture_conductivity_md_ft,
         "geometry_model": "PKN",
     }
 

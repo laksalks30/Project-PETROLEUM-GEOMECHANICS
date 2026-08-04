@@ -1,128 +1,216 @@
 {
   "well": {
-    "name": "GM-01",
-    "field": "Green Meadow",
-    "date": "20 May 2024",
-    "mem_version": "MEM-GM01-V1.1",
+    "name": "TEST-02-UPLOAD-BERHASIL",
+    "field": "Blue Horizon",
+    "date": "03 Aug 2026",
+    "mem_version": "MEM-BH02-V2.0",
     "status": "Calibrated",
-    "tvd_ft": 9843,
-    "md_ft": 10250,
-    "inclination_deg": 90.0,
-    "azimuth_deg": 0.0,
-    "hole_size_in": 8.50,
-    "reservoir_top_ft": 9780,
-    "reservoir_base_ft": 9846,
-    "net_pay_ft": 66,
-    "formation": "Sandstone",
-    "temperature_f": 230
+    "tvd_ft": 10500,
+    "md_ft": 11000,
+    "inclination_deg": 90,
+    "azimuth_deg": 45,
+    "hole_size_in": 8.5,
+    "reservoir_top_ft": 10400,
+    "reservoir_base_ft": 10480,
+    "net_pay_ft": 80,
+    "formation": "Limestone",
+    "temperature_f": 250
   },
   "logs": {
-    "Dtp": 80,
-    "Dts": 150,
-    "rho": 2.45
+    "Dtp": 75.0,
+    "Dts": 140.0,
+    "rho": 2.55
   },
   "mem": {
-    "Pp_psi": 5076,
-    "Sv_psi": 10157,
-    "Shmin_psi": 7107,
-    "SHmax_psi": 8412,
-    "stress_azimuth": "N60E",
-    "E_static_MMpsi": 2.67,
-    "nu_static": 0.286,
-    "UCS_psi": 4351,
-    "T0_psi": 435,
-    "friction_angle_deg": 30,
-    "Biot": 1.00,
-    "KIC_psi_sqin": 1092,
-    "permeability_mD": 2
+    "Pp_psi": 5500,
+    "Sv_psi": 10800,
+    "Shmin_psi": 7500,
+    "SHmax_psi": 8900,
+    "stress_azimuth": "N45E",
+    "E_static_MMpsi": 3.1,
+    "nu_static": 0.25,
+    "UCS_psi": 5000,
+    "T0_psi": 500,
+    "friction_angle_deg": 32,
+    "Biot": 1,
+    "KIC_psi_sqin": 1200,
+    "permeability_mD": 1.5
   },
   "dfit": {
-    "breakdown_psi": 7977,
-    "ISIP_psi": 7687,
-    "closure_psi": 7107,
-    "reservoir_pressure_psi": 5076,
-    "injected_volume_bbl": 113,
-    "injection_rate_bpm": 12.6
+    "breakdown_psi": 8200,
+    "ISIP_psi": 7800,
+    "closure_psi": 7500,
+    "reservoir_pressure_psi": 5500,
+    "injected_volume_bbl": 100,
+    "injection_rate_bpm": 10
   },
   "design": {
-    "total_fluid_bbl": 3270,
-    "avg_pump_rate_bpm": 25.2,
-    "duration_min_low": 130,
-    "duration_min_high": 145,
-    "total_proppant_lb": 396800,
-    "avg_conc_lb_gal": 2.89,
-    "clusters": 5,
-    "shots_per_cluster": 8,
-    "total_perforations": 40,
-    "flow_per_cluster_bpm": 5.04,
-    "flow_per_perforation_bpm": 0.63,
-    "perf_diameter_in": 0.39,
-    "phasing_deg": 60,
-    "rate_per_hole_bpm": 0.63,
-    "fracture_height_ft": 98,
-    "Pnet_psi": 1450,
-    "DeltaPperf_psi": 435,
-    "DeltaPNWB_psi": 290,
-    "MWf": 8.76,
-    "DeltaPtubing_psi": 1160,
-    "efficiency": 0.70,
-    "fault_distance_ft": 984
-  },
-  "pumping_schedule": [
-    {"stage": "Pad",       "fluid_bbl": 750, "rate_bpm": 25.0, "proppant_lb_gal": 0.0,  "proppant_lb": 0},
-    {"stage": "Ramp 1",   "fluid_bbl": 500, "rate_bpm": 25.0, "proppant_lb_gal": 1.0,  "proppant_lb": 21000},
-    {"stage": "Ramp 2",   "fluid_bbl": 550, "rate_bpm": 25.0, "proppant_lb_gal": 2.0,  "proppant_lb": 46200},
-    {"stage": "Ramp 3",   "fluid_bbl": 550, "rate_bpm": 25.0, "proppant_lb_gal": 3.5,  "proppant_lb": 80850},
-    {"stage": "Ramp 4",   "fluid_bbl": 500, "rate_bpm": 25.0, "proppant_lb_gal": 5.0,  "proppant_lb": 105000},
-    {"stage": "Tail-in",  "fluid_bbl": 350, "rate_bpm": 25.0, "proppant_lb_gal": 7.0,  "proppant_lb": 102900},
-    {"stage": "Final Tail","fluid_bbl": 70,  "rate_bpm": 25.0, "proppant_lb_gal": 14.0, "proppant_lb": 41160}
-  ],
-  "stress_profile": [
-    {"layer": "Upper Barrier", "tvd_ft": 9700, "Shmin_psi": 8267, "contrast_psi": 1160},
-    {"layer": "Reservoir",     "tvd_ft": 9800, "Shmin_psi": 7107, "contrast_psi": 0},
-    {"layer": "Lower Barrier", "tvd_ft": 9900, "Shmin_psi": 7977, "contrast_psi": 870}
-  ],
-  "uncertainty": {
-    "Shmin":             {"P10": 6500,  "P50": 7107,  "P90": 7750,  "unit": "psi"},
-    "Breakdown":         {"P10": 7400,  "P50": 8268,  "P90": 9150,  "unit": "psi"},
-    "Half_length":       {"P10": 700,   "P50": 855,   "P90": 1026,  "unit": "ft"},
-    "Surface_pressure":  {"P10": 5200,  "P50": 5959,  "P90": 6800,  "unit": "psi"},
-    "Fluid_efficiency":  {"P10": 0.55,  "P50": 0.70,  "P90": 0.80,  "unit": ""},
-    "Fracture_height":   {"P10": 80,    "P50": 98,    "P90": 130,   "unit": "ft"}
+    "total_fluid_bbl": 2800.0,
+    "avg_pump_rate_bpm": 18.0,
+    "duration_min_low": 120.0,
+    "duration_min_high": 140.0,
+    "total_proppant_lb": 350000.0,
+    "avg_conc_lb_gal": 3.0,
+    "clusters": 4.0,
+    "shots_per_cluster": 6.0,
+    "total_perforations": 24.0,
+    "flow_per_cluster_bpm": 4.5,
+    "flow_per_perforation_bpm": 0.75,
+    "perf_diameter_in": 0.4,
+    "phasing_deg": 60.0,
+    "rate_per_hole_bpm": 0.75,
+    "fracture_height_ft": 110.0,
+    "Pnet_psi": 800.0,
+    "DeltaPperf_psi": 500.0,
+    "DeltaPNWB_psi": 300.0,
+    "MWf": 8.5,
+    "DeltaPtubing_psi": 1000.0,
+    "efficiency": 0.65,
+    "fault_distance_ft": 1200.0
   },
   "sensitivity": {
-    "Net Pressure":           52,
-    "Fracture Height":        20,
-    "Plane-Strain Modulus":   11,
-    "Fluid Efficiency":        7,
-    "Fluid Volume":            6,
-    "Leakoff":                 4
+    "Net Pressure": 45,
+    "Fracture Height": 25,
+    "Plane-Strain Modulus": 15,
+    "Fluid Efficiency": 8,
+    "Fluid Volume": 5,
+    "Leakoff": 2
   },
+  "uncertainty": {
+    "Shmin": {
+      "P10": 7000.0,
+      "P50": 7500.0,
+      "P90": 8000.0,
+      "unit": "psi"
+    },
+    "Breakdown": {
+      "P10": 7800.0,
+      "P50": 8200.0,
+      "P90": 8600.0,
+      "unit": "psi"
+    },
+    "Half_length": {
+      "P10": 600.0,
+      "P50": 750.0,
+      "P90": 900.0,
+      "unit": "ft"
+    },
+    "Surface_pressure": {
+      "P10": 4500.0,
+      "P50": 5200.0,
+      "P90": 5900.0,
+      "unit": "psi"
+    },
+    "Fluid_efficiency": {
+      "P10": 0.5,
+      "P50": 0.65,
+      "P90": 0.75,
+      "unit": ""
+    },
+    "Fracture_height": {
+      "P10": 90.0,
+      "P50": 110.0,
+      "P90": 135.0,
+      "unit": "ft"
+    }
+  },
+  "pumping_schedule": [
+    {
+      "stage": "Pad",
+      "fluid_bbl": 123,
+      "rate_bpm": 34234,
+      "proppant_lb_gal": 0.0,
+      "proppant_lb": 0
+    },
+    {
+      "stage": "Ramp 1",
+      "fluid_bbl": 600,
+      "rate_bpm": 2112324,
+      "proppant_lb_gal": 123.0,
+      "proppant_lb": 123
+    },
+    {
+      "stage": "Ramp 2",
+      "fluid_bbl": 600,
+      "rate_bpm": 2125,
+      "proppant_lb_gal": 3.0,
+      "proppant_lb": 12312
+    },
+    {
+      "stage": "Ramp 3",
+      "fluid_bbl": 600,
+      "rate_bpm": 2126,
+      "proppant_lb_gal": 4.5,
+      "proppant_lb": 123
+    },
+    {
+      "stage": "Tail-in",
+      "fluid_bbl": 123,
+      "rate_bpm": 1212312,
+      "proppant_lb_gal": 12.0,
+      "proppant_lb": 1211
+    }
+  ],
+  "stress_profile": [
+    {
+      "layer": "Upper Barrier",
+      "tvd_ft": 10300,
+      "Shmin_psi": 8800,
+      "contrast_psi": 1300
+    },
+    {
+      "layer": "Reservoir",
+      "tvd_ft": 10450,
+      "Shmin_psi": 7500,
+      "contrast_psi": 0
+    },
+    {
+      "layer": "Lower Barrier",
+      "tvd_ft": 10600,
+      "Shmin_psi": 8600,
+      "contrast_psi": 1100
+    }
+  ],
   "dfit_pressure_curve": [
-    {"time_min": 0,   "pressure_psi": 5500},
-    {"time_min": 2,   "pressure_psi": 7977},
-    {"time_min": 4,   "pressure_psi": 7900},
-    {"time_min": 6,   "pressure_psi": 7820},
-    {"time_min": 8,   "pressure_psi": 7750},
-    {"time_min": 10,  "pressure_psi": 7687},
-    {"time_min": 15,  "pressure_psi": 7500},
-    {"time_min": 20,  "pressure_psi": 7300},
-    {"time_min": 25,  "pressure_psi": 7200},
-    {"time_min": 30,  "pressure_psi": 7107},
-    {"time_min": 40,  "pressure_psi": 6800},
-    {"time_min": 50,  "pressure_psi": 6400},
-    {"time_min": 60,  "pressure_psi": 6000},
-    {"time_min": 70,  "pressure_psi": 5600},
-    {"time_min": 80,  "pressure_psi": 5200},
-    {"time_min": 90,  "pressure_psi": 5076}
+    {
+      "time_min": 0,
+      "pressure_psi": 6000
+    },
+    {
+      "time_min": 2,
+      "pressure_psi": 8200
+    },
+    {
+      "time_min": 5,
+      "pressure_psi": 8000
+    },
+    {
+      "time_min": 10,
+      "pressure_psi": 7800
+    },
+    {
+      "time_min": 20,
+      "pressure_psi": 7600
+    },
+    {
+      "time_min": 30,
+      "pressure_psi": 7500
+    }
   ],
   "stress_vs_depth": [
-    {"tvd_ft": 9600, "Shmin_psi": 8267, "SHmax_psi": 9800, "Sv_psi": 9800, "Pp_psi": 4800},
-    {"tvd_ft": 9700, "Shmin_psi": 8267, "SHmax_psi": 9800, "Sv_psi": 9950, "Pp_psi": 4900},
-    {"tvd_ft": 9780, "Shmin_psi": 7107, "SHmax_psi": 8412, "Sv_psi": 10100,"Pp_psi": 5076},
-    {"tvd_ft": 9843, "Shmin_psi": 7107, "SHmax_psi": 8412, "Sv_psi": 10157,"Pp_psi": 5076},
-    {"tvd_ft": 9846, "Shmin_psi": 7977, "SHmax_psi": 9000, "Sv_psi": 10200,"Pp_psi": 5100},
-    {"tvd_ft": 9950, "Shmin_psi": 7977, "SHmax_psi": 9000, "Sv_psi": 10400,"Pp_psi": 5200},
-    {"tvd_ft": 10050,"Shmin_psi": 8100, "SHmax_psi": 9200, "Sv_psi": 10600,"Pp_psi": 5300}
+    {
+      "tvd_ft": 10200,
+      "Shmin_psi": 8800,
+      "SHmax_psi": 10000,
+      "Sv_psi": 10600,
+      "Pp_psi": 5300
+    },
+    {
+      "tvd_ft": 10400,
+      "Shmin_psi": 7500,
+      "SHmax_psi": 8900,
+      "Sv_psi": 10800,
+      "Pp_psi": 5500
+    }
   ]
 }

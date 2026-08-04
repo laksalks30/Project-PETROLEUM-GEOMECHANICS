@@ -16,47 +16,62 @@ def monte_carlo_uncertainty(
     Run Monte Carlo uncertainty analysis using triangular distributions.
 
     Returns P10/P50/P90 for key outputs.
+    All values derived from base_params (uploaded data), not hardcoded.
     """
     random.seed(seed)
     if base_params is None:
-        base_params = {
-            "Shmin_psi": 7107,
-            "E_static_MMpsi": 2.67,
-            "hf_ft": 98,
-            "efficiency": 0.70,
-            "Pnet_psi": 1450,
-        }
+        base_params = {}
 
-    samples_xf = []
-    samples_surface_p = []
+    # Safely read all params with sensible defaults
+    Shmin_base   = float(base_params.get("Shmin_psi",       7107))
+    E_base       = float(base_params.get("E_static_MMpsi",  2.67))
+    hf_base      = float(base_params.get("fracture_height_ft", 98))
+    eff_base     = float(base_params.get("efficiency",      0.70))
+    Pnet_base    = float(base_params.get("Pnet_psi",        1450))
+    nu_base      = float(base_params.get("nu_static",       0.286))
+    V_inj        = float(base_params.get("total_fluid_bbl", 2800))
+    SHmax        = float(base_params.get("SHmax_psi",       8900))
+    Pp           = float(base_params.get("Pp_psi",          5500))
+    T0           = float(base_params.get("T0_psi",          500))
+    TVD          = float(base_params.get("tvd_ft",          10500))
+    MWf          = float(base_params.get("MWf",             8.76))
+    dP_perf      = float(base_params.get("DeltaPperf_psi",  500))
+    dP_NWB       = float(base_params.get("DeltaPNWB_psi",   300))
+    dP_tubing    = float(base_params.get("DeltaPtubing_psi",1000))
+
+    samples_xf         = []
+    samples_surface_p  = []
     samples_efficiency = []
-    samples_hf = []
-    samples_Shmin = []
-    samples_breakdown = []
+    samples_hf         = []
+    samples_Shmin      = []
+    samples_breakdown  = []
 
     for _ in range(n_samples):
-        # Sample inputs (triangular distributions)
-        Shmin = _triangular(6500, 7107, 7750)
-        E = _triangular(2.40, 2.67, 3.00)
-        hf = _triangular(80, 98, 130)
-        eff = _triangular(0.55, 0.70, 0.80)
-        Pnet = _triangular(1200, 1450, 1700)
-        nu = _triangular(0.25, 0.286, 0.32)
+        # Sample inputs using triangular distributions (±15% around base)
+        Shmin  = _triangular(Shmin_base * 0.90, Shmin_base, Shmin_base * 1.10)
+        E      = _triangular(E_base * 0.90,     E_base,     E_base * 1.10)
+        hf     = _triangular(hf_base * 0.80,    hf_base,    hf_base * 1.30)
+        eff    = _triangular(max(0.30, eff_base * 0.80), eff_base, min(0.95, eff_base * 1.15))
+        Pnet   = _triangular(Pnet_base * 0.80,  Pnet_base,  Pnet_base * 1.20)
+        nu     = _triangular(max(0.10, nu_base * 0.88), nu_base, min(0.49, nu_base * 1.12))
 
-        # Fracture geometry
-        Eprime = (E * 1e6) / (1 - nu**2)
-        hf_in = hf * 12
-        wmax_in = (2 * Pnet * hf_in) / Eprime
+        # Fracture geometry (PKN)
+        Eprime  = (E * 1e6) / (1 - nu**2)
+        hf_in   = hf * 12
+        wmax_in = (2 * Pnet * hf_in) / Eprime if Eprime > 0 else 0
         wavg_in = (math.pi / 4) * wmax_in
-        Vfrac_ft3 = eff * 3270 * 5.615
-        wavg_ft = wavg_in / 12
+        Vfrac_ft3 = eff * V_inj * 5.615
+        wavg_ft   = wavg_in / 12
         xf = Vfrac_ft3 / (2 * hf * wavg_ft) if wavg_ft > 0 else 0
 
-        # Surface pressure
-        surf_p = (Shmin + Pnet + 435 + 290) - (0.052 * 8.76 * 9843) + 1160
+        # Surface treating pressure (from actual MEM params)
+        Pf     = Shmin + Pnet
+        BHTP   = Pf + dP_perf + dP_NWB
+        Phyd   = 0.052 * MWf * TVD
+        surf_p = BHTP - Phyd + dP_tubing
 
-        # Breakdown
-        breakdown = 3 * Shmin - 8412 - 5076 + 435
+        # Breakdown pressure (Hubbert-Willis)
+        breakdown = 3 * Shmin - SHmax - Pp + T0
 
         samples_xf.append(xf)
         samples_surface_p.append(surf_p)
