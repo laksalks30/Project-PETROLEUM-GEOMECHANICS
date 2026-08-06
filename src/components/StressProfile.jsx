@@ -60,15 +60,19 @@ export default function StressProfile({ stressProfile }) {
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={data} layout="vertical" margin={{ top: 10, right: 20, left: -5, bottom: 0 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" horizontal={false} />
-              <XAxis type="number" domain={[2000, 12000]} tick={{ fill: '#64748b', fontSize: 11 }} tickLine={false} axisLine={{ stroke: '#334155' }} tickFormatter={v => `${(v/1000).toFixed(0)}k`} />
-              <YAxis dataKey="tvd_ft" type="number" reversed domain={['dataMin', 'dataMax']} tick={{ fill: '#64748b', fontSize: 11 }} tickLine={false} axisLine={false} tickFormatter={v => `${v}`} width={40} />
+              <XAxis type="number" domain={[0, 'dataMax + 200']} tick={{ fill: '#64748b', fontSize: 11 }} tickLine={false} axisLine={{ stroke: '#334155' }} tickFormatter={v => `${(v/1000).toFixed(1)}k`} />
+              <YAxis dataKey="tvd_ft" type="number" domain={['dataMax + 50', 'dataMin - 50']} tick={{ fill: '#64748b', fontSize: 11 }} tickLine={false} axisLine={false} tickFormatter={v => `${v}`} width={65} tickCount={8} />
               <Tooltip content={<CustomTooltip />} />
-              <ReferenceLine y={reservoirTop}  stroke="#a855f7" strokeDasharray="4 4" strokeOpacity={0.6} />
-              <ReferenceLine y={reservoirBase} stroke="#a855f7" strokeDasharray="4 4" strokeOpacity={0.6} />
-              <Line dataKey="Shmin_psi" name="Shmin" stroke="#22c55e" strokeWidth={2.5} dot={false} type="monotone" activeDot={{ r: 5, fill: '#22c55e', stroke: '#166534', strokeWidth: 2 }} />
-              <Line dataKey="SHmax_psi" name="SHmax" stroke="#f59e0b" strokeWidth={2.5} dot={false} type="monotone" />
-              <Line dataKey="Sv_psi"    name="Sv"    stroke="#64748b" strokeWidth={2} dot={false} type="monotone" strokeDasharray="4 4" />
-              <Line dataKey="Pp_psi"    name="Pp"    stroke="#0ea5e9" strokeWidth={2} dot={false} type="monotone" />
+              {reservoirTop && reservoirTop >= data[0]?.tvd_ft && reservoirTop <= data[data.length-1]?.tvd_ft && (
+                 <ReferenceLine y={reservoirTop}  stroke="#a855f7" strokeDasharray="4 4" strokeOpacity={0.6} />
+              )}
+              {reservoirBase && reservoirBase >= data[0]?.tvd_ft && reservoirBase <= data[data.length-1]?.tvd_ft && (
+                 <ReferenceLine y={reservoirBase} stroke="#a855f7" strokeDasharray="4 4" strokeOpacity={0.6} />
+              )}
+              <Line dataKey="Shmin_psi" name="Shmin" stroke="#22c55e" strokeWidth={2} dot={false} type="monotone" activeDot={{ r: 5, fill: '#22c55e', stroke: '#166534', strokeWidth: 2 }} isAnimationActive={false} />
+              <Line dataKey="SHmax_psi" name="SHmax" stroke="#f59e0b" strokeWidth={2} dot={false} type="monotone" isAnimationActive={false} />
+              <Line dataKey="Sv_psi"    name="Sv"    stroke="#64748b" strokeWidth={1.5} dot={false} type="monotone" strokeDasharray="4 4" isAnimationActive={false} />
+              <Line dataKey="Pp_psi"    name="Pp"    stroke="#0ea5e9" strokeWidth={1.5} dot={false} type="monotone" isAnimationActive={false} />
             </LineChart>
           </ResponsiveContainer>
         </div>

@@ -312,10 +312,11 @@ def api_design_summary():
         height_containment_pct = 98
 
     # avg_pump_rate_bpm: prefer live calculation from pumping_schedule
-    schedule = DEFAULT_DATA.get("pumping_schedule", [])
-    total_fluid_sched = sum(float(s.get("fluid_bbl", 0) or 0) for s in schedule)
+    schedule_obj = DEFAULT_DATA.get("pumping_schedule", {})
+    schedule = schedule_obj.get("stages", []) if isinstance(schedule_obj, dict) else []
+    total_fluid_sched = sum(float(s.get("fluid_bbl", 0) or 0) for s in schedule if isinstance(s, dict))
     if total_fluid_sched > 0:
-        weighted = sum(float(s.get("fluid_bbl",0) or 0) * float(s.get("rate_bpm",0) or 0) for s in schedule)
+        weighted = sum(float(s.get("fluid_bbl",0) or 0) * float(s.get("rate_bpm",0) or 0) for s in schedule if isinstance(s, dict))
         avg_pump_rate = round(weighted / total_fluid_sched, 1)
     else:
         avg_pump_rate = design.get("avg_pump_rate_bpm", 0)
@@ -352,25 +353,41 @@ def api_design_summary():
 @app.get("/api/pumping-schedule")
 def api_pumping_schedule():
     """Return pumping schedule table."""
-    schedule = DEFAULT_DATA.get("pumping_schedule", [])
+    schedule_obj = DEFAULT_DATA.get("pumping_schedule", {})
+    
+    # Support both formats: {stages: [...]} dict (from Excel parser) or plain list (from JSON template)
+    if isinstance(schedule_obj, dict):
+        schedule = schedule_obj.get("stages", [])
+        # Use pre-computed totals from parser if available
+        total_fluid    = schedule_obj.get("total_fluid_bbl", None)
+        total_proppant = schedule_obj.get("total_proppant_lb", None)
+        avg_rate       = schedule_obj.get("avg_rate_bpm", None)
+    else:
+        schedule = schedule_obj if isinstance(schedule_obj, list) else []
+        total_fluid = total_proppant = avg_rate = None
 
-    # Calculate totals dynamically from uploaded data (not hardcoded)
-    total_fluid    = sum(float(s.get("fluid_bbl", 0) or 0)     for s in schedule)
-    total_proppant = sum(float(s.get("proppant_lb", 0) or 0)   for s in schedule)
+    # Ensure items are dicts before computing
+    schedule = [s for s in schedule if isinstance(s, dict)]
+
+    # Recompute totals if not pre-computed
+    if total_fluid is None:
+        total_fluid    = sum(float(s.get("fluid_bbl", 0) or 0)     for s in schedule)
+    if total_proppant is None:
+        total_proppant = sum(float(s.get("proppant_lb", 0) or 0)   for s in schedule)
 
     # Weighted average rate: sum(fluid_bbl * rate_bpm) / total_fluid
-    if total_fluid > 0:
-        weighted_rate  = sum(
-            float(s.get("fluid_bbl", 0) or 0) * float(s.get("rate_bpm", 0) or 0)
-            for s in schedule
-        )
-        avg_rate = round(weighted_rate / total_fluid, 1)
-    elif schedule:
-        # Fallback: simple average if fluid volumes are missing
-        rates = [float(s.get("rate_bpm", 0) or 0) for s in schedule]
-        avg_rate = round(sum(rates) / len(rates), 1) if rates else 0
-    else:
-        avg_rate = 0
+    if avg_rate is None:
+        if total_fluid > 0:
+            weighted_rate  = sum(
+                float(s.get("fluid_bbl", 0) or 0) * float(s.get("rate_bpm", 0) or 0)
+                for s in schedule
+            )
+            avg_rate = round(weighted_rate / total_fluid, 1)
+        elif schedule:
+            rates = [float(s.get("rate_bpm", 0) or 0) for s in schedule]
+            avg_rate = round(sum(rates) / len(rates), 1) if rates else 0
+        else:
+            avg_rate = 0
 
     return {
         "stages":            schedule,
@@ -403,8 +420,12 @@ def api_containment():
     Shmin_calibrated = dfit.get("closure_psi", mem["Shmin_psi"])
 
     stress_layers = DEFAULT_DATA.get("stress_profile", [])
-    upper = next((l for l in stress_layers if l.get("layer") == "Upper Barrier"), {"Shmin_psi": 8267})
-    lower = next((l for l in stress_layers if l.get("layer") == "Lower Barrier"), {"Shmin_psi": 7977})
+    # Fallback barrier: gunakan formula fisika (Shmin * 1.17) bukan angka hardcoded
+    # sehingga hasil kalkulasi selalu konsisten dengan data sumur yang di-upload.
+    fallback_upper_psi = round(Shmin_calibrated * 1.17)
+    fallback_lower_psi = round(Shmin_calibrated * 1.13)
+    upper = next((l for l in stress_layers if l.get("layer") == "Upper Barrier"), {"Shmin_psi": fallback_upper_psi})
+    lower = next((l for l in stress_layers if l.get("layer") == "Lower Barrier"), {"Shmin_psi": fallback_lower_psi})
 
     return calc_containment_fault(
         Shmin_psi=Shmin_calibrated,
@@ -418,8 +439,8 @@ def api_containment():
 
 @app.get("/api/uncertainty")
 def api_uncertainty():
-    """Return P10/P50/P90 uncertainty table (static reference data)."""
-    return DEFAULT_DATA["uncertainty"]
+    """Return P10/P50/P90 uncertainty table."""
+    return DEFAULT_DATA.get("uncertainty", {})
 
 
 @app.get("/api/uncertainty/montecarlo")
@@ -475,10 +496,12 @@ def api_risk():
     # Use DFIT calibrated Shmin if available
     Shmin_calibrated = dfit.get("closure_psi", mem["Shmin_psi"])
 
-    # Use actual stress barrier data from uploaded stress_profile
+    # Gunakan data barrier dari stress_profile jika ada, jika tidak pakai formula fisika
     stress_layers = DEFAULT_DATA.get("stress_profile", [])
-    upper = next((l for l in stress_layers if l.get("layer") == "Upper Barrier"), {"Shmin_psi": 8267})
-    lower = next((l for l in stress_layers if l.get("layer") == "Lower Barrier"), {"Shmin_psi": 7977})
+    fallback_upper_psi = round(Shmin_calibrated * 1.17)
+    fallback_lower_psi = round(Shmin_calibrated * 1.13)
+    upper = next((l for l in stress_layers if l.get("layer") == "Upper Barrier"), {"Shmin_psi": fallback_upper_psi})
+    lower = next((l for l in stress_layers if l.get("layer") == "Lower Barrier"), {"Shmin_psi": fallback_lower_psi})
 
     containment = calc_containment_fault(
         Shmin_psi=Shmin_calibrated,
