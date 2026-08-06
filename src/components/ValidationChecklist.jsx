@@ -37,7 +37,7 @@ export default function ValidationChecklist() {
                 onChange={() => toggleCheck(idx)}
                 style={{ marginTop: 2, cursor: 'pointer' }}
               />
-              <span style={{ fontSize: 13, color: checked[idx] ? '#22c55e' : '#cbd5e1', fontWeight: checked[idx] ? 600 : 400 }}>
+              <span style={{ fontSize: 14.5, color: checked[idx] ? '#22c55e' : '#cbd5e1', fontWeight: checked[idx] ? 600 : 400 }}>
                 {item}
               </span>
             </label>

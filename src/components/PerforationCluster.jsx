@@ -17,7 +17,7 @@ export default function PerforationCluster({ design }) {
         borderLeft: '2px solid #38bdf8'
       }}>
         <Target size={12} color="#38bdf8" />
-        <span style={{ fontSize: 10, fontWeight: 800, color: '#f8fafc', letterSpacing: '0.08em' }}>PERFORATION & CLUSTER DISTRIBUTION</span>
+        <span style={{ fontSize: 11, fontWeight: 800, color: '#f8fafc', letterSpacing: '0.08em' }}>PERFORATION & CLUSTER DISTRIBUTION</span>
       </div>
 
       <div className="flex-1 p-2 flex flex-col gap-2.5 overflow-y-auto custom-scrollbar">
@@ -96,8 +96,8 @@ function StatRow({ label, value, color, highlight }) {
       border: `1px solid ${highlight ? color + '40' : 'rgba(255,255,255,0.03)'}`,
       borderLeft: highlight ? `2px solid ${color}` : '1px solid rgba(255,255,255,0.03)'
     }}>
-      <span style={{ fontSize: 8, color: highlight ? color : '#64748b', fontWeight: 800, letterSpacing: '0.05em' }}>{label}</span>
-      <span style={{ fontSize: 12, color: highlight ? color : '#f8fafc', fontWeight: 800, letterSpacing: '0.02em', marginTop: 2 }}>{value}</span>
+      <span style={{ fontSize: 10, color: highlight ? color : '#64748b', fontWeight: 800, letterSpacing: '0.05em' }}>{label}</span>
+      <span style={{ fontSize: 13.5, color: highlight ? color : '#f8fafc', fontWeight: 800, letterSpacing: '0.02em', marginTop: 2 }}>{value}</span>
     </div>
   )
 }

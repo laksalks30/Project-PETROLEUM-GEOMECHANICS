@@ -5,7 +5,7 @@ import { Layers } from 'lucide-react'
 const CustomTooltip = ({ active, payload, label }) => {
   if (active && payload?.length) {
     return (
-      <div style={{ background: '#0a101f', border: '1px solid rgba(59,130,246,0.3)', borderRadius: 6, padding: '6px 10px', fontSize: 11, boxShadow: '0 4px 12px rgba(0,0,0,0.5)' }}>
+      <div style={{ background: '#0a101f', border: '1px solid rgba(59,130,246,0.3)', borderRadius: 6, padding: '6px 10px', fontSize: 12, boxShadow: '0 4px 12px rgba(0,0,0,0.5)' }}>
         <div style={{ color: '#94a3b8', marginBottom: 4, fontWeight: 600 }}>TVD: {label?.toLocaleString()} ft</div>
         {payload.map(p => (
           <div key={p.name} style={{ color: p.color, fontWeight: 500 }}>
@@ -32,7 +32,7 @@ export default function StressProfile({ stressProfile }) {
 
   return (
     <div className="card h-full flex flex-col" id="panel-stress-profile">
-      <div className="card-title text-[#38bdf8]" style={{ padding: '6px 10px', fontSize: 11, fontWeight: 700, letterSpacing: '0.05em', borderBottom: '1px solid rgba(56,189,248,0.1)' }}>
+      <div className="card-title text-[#38bdf8]" style={{ padding: '6px 10px', fontSize: 12, fontWeight: 700, letterSpacing: '0.05em', borderBottom: '1px solid rgba(56,189,248,0.1)' }}>
         <div className="flex items-center gap-2">
           <Layers size={12} />
           STRESS PROFILE VS DEPTH
@@ -50,7 +50,7 @@ export default function StressProfile({ stressProfile }) {
           ].map(({ label, color }) => (
             <div key={label} className="flex items-center gap-1.5">
               <div className="w-2.5 h-2.5 rounded-full" style={{ background: color, flexShrink: 0, opacity: 0.8 }} />
-              <span style={{ fontSize: 9, color: '#f8fafc', fontWeight: 600, letterSpacing: '0.02em' }}>{label}</span>
+              <span style={{ fontSize: 11, color: '#f8fafc', fontWeight: 600, letterSpacing: '0.02em' }}>{label}</span>
             </div>
           ))}
         </div>
@@ -60,8 +60,8 @@ export default function StressProfile({ stressProfile }) {
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={data} layout="vertical" margin={{ top: 10, right: 20, left: -5, bottom: 0 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" horizontal={false} />
-              <XAxis type="number" domain={[2000, 12000]} tick={{ fill: '#64748b', fontSize: 9 }} tickLine={false} axisLine={{ stroke: '#334155' }} tickFormatter={v => `${(v/1000).toFixed(0)}k`} />
-              <YAxis dataKey="tvd_ft" type="number" reversed domain={['dataMin', 'dataMax']} tick={{ fill: '#64748b', fontSize: 9 }} tickLine={false} axisLine={false} tickFormatter={v => `${v}`} width={40} />
+              <XAxis type="number" domain={[2000, 12000]} tick={{ fill: '#64748b', fontSize: 11 }} tickLine={false} axisLine={{ stroke: '#334155' }} tickFormatter={v => `${(v/1000).toFixed(0)}k`} />
+              <YAxis dataKey="tvd_ft" type="number" reversed domain={['dataMin', 'dataMax']} tick={{ fill: '#64748b', fontSize: 11 }} tickLine={false} axisLine={false} tickFormatter={v => `${v}`} width={40} />
               <Tooltip content={<CustomTooltip />} />
               <ReferenceLine y={reservoirTop}  stroke="#a855f7" strokeDasharray="4 4" strokeOpacity={0.6} />
               <ReferenceLine y={reservoirBase} stroke="#a855f7" strokeDasharray="4 4" strokeOpacity={0.6} />
@@ -91,8 +91,8 @@ function BarrierBadge({ label, value, color }) {
       border: `1px solid ${color}25`,
       borderTop: `2px solid ${color}`,
     }}>
-      <span style={{ fontSize: 8, color: '#475569', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 700 }}>{label}</span>
-      <span style={{ fontSize: 12, color: color, fontWeight: 800, marginTop: 2, textShadow: `0 0 12px ${color}50` }}>{value}</span>
+      <span style={{ fontSize: 10, color: '#475569', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 700 }}>{label}</span>
+      <span style={{ fontSize: 13.5, color: color, fontWeight: 800, marginTop: 2, textShadow: `0 0 12px ${color}50` }}>{value}</span>
     </div>
   )
 }

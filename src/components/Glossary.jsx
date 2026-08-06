@@ -29,7 +29,7 @@ export default function Glossary() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {GLOSSARY.map(({ term, def }) => (
             <div key={term} className="p-4 rounded-lg bg-blue-900/10 border border-blue-500/10">
-              <h3 className="font-bold text-blue-400 mb-1" style={{ fontSize: 13 }}>{term}</h3>
+              <h3 className="font-bold text-blue-400 mb-1" style={{ fontSize: 14.5 }}>{term}</h3>
               <p className="text-gray-400 text-sm leading-relaxed">{def}</p>
             </div>
           ))}

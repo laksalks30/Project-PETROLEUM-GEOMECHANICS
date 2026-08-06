@@ -24,7 +24,7 @@ export default function PressureComponents({ pressure }) {
         borderLeft: '2px solid #38bdf8'
       }}>
         <Gauge size={12} color="#38bdf8" />
-        <span style={{ fontSize: 10, fontWeight: 800, color: '#f8fafc', letterSpacing: '0.08em' }}>PRESSURE COMPONENTS</span>
+        <span style={{ fontSize: 11, fontWeight: 800, color: '#f8fafc', letterSpacing: '0.08em' }}>PRESSURE COMPONENTS</span>
       </div>
 
       <div className="flex-1 overflow-y-auto custom-scrollbar p-2 flex flex-col gap-2">
@@ -44,9 +44,9 @@ export default function PressureComponents({ pressure }) {
               borderLeft: highlight ? `2px solid ${color}` : 'none',
               paddingLeft: highlight ? 8 : 10
             }}>
-              <span style={{ fontSize: 8, color: highlight ? color : '#94a3b8', fontWeight: 800, letterSpacing: '0.05em' }}>{label}</span>
-              <span style={{ fontSize: 11, color: highlight ? color : '#f8fafc', fontWeight: 800, letterSpacing: '0.02em' }}>
-                {value?.toLocaleString()} <span style={{ fontSize: 8, opacity: 0.6, fontWeight: 600 }}>{unit}</span>
+              <span style={{ fontSize: 10, color: highlight ? color : '#94a3b8', fontWeight: 800, letterSpacing: '0.05em' }}>{label}</span>
+              <span style={{ fontSize: 12, color: highlight ? color : '#f8fafc', fontWeight: 800, letterSpacing: '0.02em' }}>
+                {value?.toLocaleString()} <span style={{ fontSize: 10, opacity: 0.6, fontWeight: 600 }}>{unit}</span>
               </span>
             </div>
           ))}
@@ -61,8 +61,8 @@ function PressureBar({ label, value, max, color, prefix = '' }) {
   return (
     <div className="mb-2 last:mb-0">
       <div className="flex justify-between mb-1">
-        <span style={{ fontSize: 9, color: '#64748b', fontWeight: 700, letterSpacing: '0.02em' }}>{prefix}{label}</span>
-        <span style={{ fontSize: 9, color, fontWeight: 800 }}>{value?.toLocaleString()} psi</span>
+        <span style={{ fontSize: 11, color: '#64748b', fontWeight: 700, letterSpacing: '0.02em' }}>{prefix}{label}</span>
+        <span style={{ fontSize: 11, color, fontWeight: 800 }}>{value?.toLocaleString()} psi</span>
       </div>
       <div style={{ height: 4, background: 'rgba(255,255,255,0.05)', borderRadius: 2, overflow: 'hidden' }}>
         <div style={{ width: `${pct}%`, height: '100%', background: color, borderRadius: 2, boxShadow: `0 0 6px ${color}80`, transition: 'width 0.5s ease' }} />

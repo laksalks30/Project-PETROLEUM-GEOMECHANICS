@@ -39,7 +39,7 @@ export default function EngineWorkflow() {
                   background: 'rgba(59,130,246,0.05)', border: '1px solid rgba(59,130,246,0.1)'
                 }}>
                   <div style={{ color: '#e2e8f0', fontWeight: 600, marginBottom: 4 }}>{step.process}</div>
-                  <div className="flex items-center gap-2" style={{ fontSize: 11, color: '#22c55e', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 700 }}>
+                  <div className="flex items-center gap-2" style={{ fontSize: 12, color: '#22c55e', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 700 }}>
                     <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#22c55e' }}></div>
                     Output: {step.output}
                   </div>

@@ -107,17 +107,17 @@ export default function KPIStrip({ data }) {
                 <Icon size={11} color={color} />
               </div>
               <span className="flex-1 whitespace-nowrap overflow-hidden text-ellipsis"
-                style={{ fontSize: 9, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.06em', fontWeight: 600 }}>
+                style={{ fontSize: 11, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.06em', fontWeight: 600 }}>
                 {label}
               </span>
               {type === 'input' ? (
                 <span className="flex-shrink-0 rounded px-1 py-px"
-                  style={{ background: 'rgba(56,189,248,0.12)', color: '#38bdf8', fontSize: 7.5, fontWeight: 800, letterSpacing: '0.05em' }}>
+                  style={{ background: 'rgba(56,189,248,0.12)', color: '#38bdf8', fontSize: 9, fontWeight: 800, letterSpacing: '0.05em' }}>
                   INPUT
                 </span>
               ) : (
                 <span className="flex-shrink-0 rounded px-1 py-px"
-                  style={{ background: 'rgba(100,116,139,0.15)', color: '#64748b', fontSize: 7.5, fontWeight: 800, letterSpacing: '0.05em' }}>
+                  style={{ background: 'rgba(100,116,139,0.15)', color: '#64748b', fontSize: 9, fontWeight: 800, letterSpacing: '0.05em' }}>
                   CALC
                 </span>
               )}
@@ -133,7 +133,7 @@ export default function KPIStrip({ data }) {
               }}>
                 {value}
               </span>
-              <span style={{ fontSize: 10, color: '#475569', fontWeight: 600 }}>{unit}</span>
+              <span style={{ fontSize: 11, color: '#475569', fontWeight: 600 }}>{unit}</span>
             </div>
           </div>
         )

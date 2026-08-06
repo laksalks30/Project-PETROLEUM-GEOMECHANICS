@@ -19,12 +19,12 @@ const CustomTooltip = ({ active, payload }) => {
         border: '1px solid rgba(56,189,248,0.3)',
         borderRadius: 6,
         padding: '8px 12px',
-        fontSize: 11,
+        fontSize: 12,
         boxShadow: '0 8px 32px rgba(0,0,0,0.6)',
         backdropFilter: 'blur(8px)'
       }}>
         <div style={{ color: '#94a3b8', marginBottom: 6, fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase' }}>{payload[0]?.payload?.parameter}</div>
-        <div style={{ color: '#38bdf8', fontWeight: 800, fontSize: 13 }}>IMPACT: {payload[0]?.value}%</div>
+        <div style={{ color: '#38bdf8', fontWeight: 800, fontSize: 14.5 }}>IMPACT: {payload[0]?.value}%</div>
       </div>
     )
   }
@@ -52,7 +52,7 @@ export default function SensitivityTornado({ sensitivity }) {
         borderLeft: '2px solid #38bdf8'
       }}>
         <TrendingUp size={12} color="#38bdf8" />
-        <span style={{ fontSize: 10, fontWeight: 800, color: '#f8fafc', letterSpacing: '0.08em' }}>SENSITIVITY — FRACTURE HALF-LENGTH (XF)</span>
+        <span style={{ fontSize: 11, fontWeight: 800, color: '#f8fafc', letterSpacing: '0.08em' }}>SENSITIVITY — FRACTURE HALF-LENGTH (XF)</span>
       </div>
 
       <div className="flex-1 p-2.5 flex flex-col gap-2">
@@ -65,8 +65,8 @@ export default function SensitivityTornado({ sensitivity }) {
               barSize={12}
             >
               <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" horizontal={false} />
-              <XAxis type="number" domain={[0, 60]} tick={{ fill: '#64748b', fontSize: 9, fontWeight: 600 }} tickLine={false} axisLine={{ stroke: '#334155' }} tickFormatter={v => `${v}%`} label={{ value: 'IMPACT ON HALF-LENGTH (%)', position: 'insideBottom', fill: '#475569', fontSize: 8, fontWeight: 700, letterSpacing: '0.1em', dy: 10 }} />
-              <YAxis type="category" dataKey="parameter" tick={{ fill: '#94a3b8', fontSize: 9, fontWeight: 600 }} tickLine={false} axisLine={false} width={98} />
+              <XAxis type="number" domain={[0, 60]} tick={{ fill: '#64748b', fontSize: 11, fontWeight: 600 }} tickLine={false} axisLine={{ stroke: '#334155' }} tickFormatter={v => `${v}%`} label={{ value: 'IMPACT ON HALF-LENGTH (%)', position: 'insideBottom', fill: '#475569', fontSize: 10, fontWeight: 700, letterSpacing: '0.1em', dy: 10 }} />
+              <YAxis type="category" dataKey="parameter" tick={{ fill: '#94a3b8', fontSize: 11, fontWeight: 600 }} tickLine={false} axisLine={false} width={98} />
               <Tooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(56,189,248,0.05)' }} />
               <ReferenceLine x={0} stroke="rgba(56,189,248,0.2)" />
               <Bar dataKey="impact_pct" name="Impact %" radius={[0, 4, 4, 0]}>
@@ -94,7 +94,7 @@ function LegendItem({ color, label }) {
   return (
     <div className="flex items-center gap-1.5 px-2 py-1 rounded" style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.03)' }}>
       <div className="w-2 h-2 rounded-sm flex-shrink-0" style={{ background: color, boxShadow: `0 0 6px ${color}` }} />
-      <span style={{ fontSize: 8, color: '#94a3b8', fontWeight: 800, letterSpacing: '0.05em' }}>{label}</span>
+      <span style={{ fontSize: 10, color: '#94a3b8', fontWeight: 800, letterSpacing: '0.05em' }}>{label}</span>
     </div>
   )
 }

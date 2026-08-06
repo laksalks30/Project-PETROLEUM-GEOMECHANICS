@@ -27,9 +27,9 @@ function Row({ label, keyName, unit, color, icon: Icon, mem, fmt }) {
         <Icon size={11} color={color} strokeWidth={2} />
       </div>
       <div className="flex flex-1 items-center justify-between min-w-0">
-        <span style={{ fontSize: 9, color: '#94a3b8', letterSpacing: '0.01em' }}>{label}</span>
-        <span style={{ fontSize: 11, color: '#f8fafc', fontWeight: 700, flexShrink: 0 }}>
-          {val}{unit ? <span style={{ fontSize: 9, color: '#475569', marginLeft: 2, fontWeight: 500 }}>{unit}</span> : null}
+        <span style={{ fontSize: 11, color: '#94a3b8', letterSpacing: '0.01em' }}>{label}</span>
+        <span style={{ fontSize: 12, color: '#f8fafc', fontWeight: 700, flexShrink: 0 }}>
+          {val}{unit ? <span style={{ fontSize: 11, color: '#475569', marginLeft: 2, fontWeight: 500 }}>{unit}</span> : null}
         </span>
       </div>
     </div>
@@ -41,7 +41,7 @@ export default function MEMSummary({ mem }) {
 
   return (
     <div className="card h-full flex flex-col" id="panel-mem-summary">
-      <div className="card-title text-[#38bdf8]" style={{ padding: '6px 10px', fontSize: 11, fontWeight: 700, letterSpacing: '0.05em', borderBottom: '1px solid rgba(56,189,248,0.1)' }}>
+      <div className="card-title text-[#38bdf8]" style={{ padding: '6px 10px', fontSize: 12, fontWeight: 700, letterSpacing: '0.05em', borderBottom: '1px solid rgba(56,189,248,0.1)' }}>
         <div className="flex items-center gap-2">
           <Compass size={12} />
           COMMON MEM / TARGET INTERVAL SUMMARY
@@ -50,7 +50,7 @@ export default function MEMSummary({ mem }) {
       <div className="flex-1 p-2 overflow-auto min-h-0 flex flex-col gap-3">
         {/* Section 1: Pressures & Moduli */}
         <div>
-          <div style={{ fontSize: 8, color: '#334155', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700, marginBottom: 4, paddingLeft: 2 }}>
+          <div style={{ fontSize: 10, color: '#334155', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700, marginBottom: 4, paddingLeft: 2 }}>
             ◈ Pressures & Elastic Properties
           </div>
           <div className="flex flex-col gap-1">
@@ -59,7 +59,7 @@ export default function MEMSummary({ mem }) {
         </div>
         {/* Section 2: Geometry & Rock Props */}
         <div>
-          <div style={{ fontSize: 8, color: '#334155', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700, marginBottom: 4, paddingLeft: 2 }}>
+          <div style={{ fontSize: 10, color: '#334155', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700, marginBottom: 4, paddingLeft: 2 }}>
             ◈ Rock Properties & Geometry
           </div>
           <div className="flex flex-col gap-1">

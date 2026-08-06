@@ -52,8 +52,8 @@ function Toast({ toasts, removeToast }) {
               {t.type === 'info'    && <Loader2 size={15} color="#3b82f6" style={{ animation: 'spin 1s linear infinite' }} />}
             </div>
             <div className="flex-1">
-              <div style={{ fontSize: 11, fontWeight: 700, color: c.text, letterSpacing: '0.03em' }}>{t.title}</div>
-              {t.message && <div style={{ fontSize: 10, color: '#94a3b8', marginTop: 2, lineHeight: 1.5 }}>{t.message}</div>}
+              <div style={{ fontSize: 12, fontWeight: 700, color: c.text, letterSpacing: '0.03em' }}>{t.title}</div>
+              {t.message && <div style={{ fontSize: 11, color: '#94a3b8', marginTop: 2, lineHeight: 1.5 }}>{t.message}</div>}
             </div>
             <button onClick={() => removeToast(t.id)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#475569', padding: 2, flexShrink: 0 }}>
               <X size={12} />
@@ -220,16 +220,16 @@ export default function App() {
                 <polygon points="20,2 34,14 20,24 6,14"    fill="#f8fafc" />
               </svg>
               <div>
-                <h1 style={{ fontSize: 13.5, fontWeight: 900, color: '#f8fafc', letterSpacing: '0.06em', lineHeight: 1.1, textTransform: 'uppercase', margin: 0 }}>
+                <h1 style={{ fontSize: 15, fontWeight: 900, color: '#f8fafc', letterSpacing: '0.06em', lineHeight: 1.1, textTransform: 'uppercase', margin: 0 }}>
                   Hydraulic Fracturing Design Engine
                 </h1>
                 <div className="flex items-center gap-1.5" style={{ marginTop: 3 }}>
                   <div style={{ width: 5, height: 5, borderRadius: '50%', background: '#06b6d4', boxShadow: '0 0 6px #06b6d4' }} />
-                  <span style={{ fontSize: 9, color: '#334155', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+                  <span style={{ fontSize: 11, color: '#334155', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
                     Common Calibrated MEM Database
                   </span>
                   <ChevronRight size={9} color="#1e293b" />
-                  <span style={{ fontSize: 9, color: '#06b6d4', fontWeight: 800, letterSpacing: '0.03em' }}>
+                  <span style={{ fontSize: 11, color: '#06b6d4', fontWeight: 800, letterSpacing: '0.03em' }}>
                     Well {well?.name || 'GM-01'}
                   </span>
                 </div>
@@ -254,7 +254,7 @@ export default function App() {
                 border: '1px solid rgba(34,197,94,0.2)',
               }}>
                 <div style={{ width: 7, height: 7, borderRadius: '50%', background: '#22c55e', boxShadow: '0 0 8px rgba(34,197,94,0.8)', flexShrink: 0 }} />
-                <span style={{ fontSize: 10, color: '#22c55e', fontWeight: 800, letterSpacing: '0.05em' }}>
+                <span style={{ fontSize: 11, color: '#22c55e', fontWeight: 800, letterSpacing: '0.05em' }}>
                   {status}
                 </span>
               </div>
@@ -285,7 +285,7 @@ export default function App() {
                   ? <Loader2 size={12} color="#a855f7" style={{ animation: 'spin 0.8s linear infinite' }} />
                   : <Upload size={12} color="#a855f7" />
                 }
-                <span style={{ fontSize: 10, color: '#a855f7', fontWeight: 700, letterSpacing: '0.04em', whiteSpace: 'nowrap' }}>
+                <span style={{ fontSize: 11, color: '#a855f7', fontWeight: 700, letterSpacing: '0.04em', whiteSpace: 'nowrap' }}>
                   {uploading ? 'Uploading...' : 'Upload File'}
                 </span>
               </button>
@@ -311,7 +311,7 @@ export default function App() {
                   color="#3b82f6"
                   style={{ animation: refreshing ? 'spin 0.8s linear infinite' : 'none' }}
                 />
-                <span style={{ fontSize: 10, color: '#3b82f6', fontWeight: 700, letterSpacing: '0.04em', whiteSpace: 'nowrap' }}>
+                <span style={{ fontSize: 11, color: '#3b82f6', fontWeight: 700, letterSpacing: '0.04em', whiteSpace: 'nowrap' }}>
                   {refreshing ? 'Refreshing...' : 'Refresh'}
                 </span>
               </button>
@@ -327,12 +327,12 @@ export default function App() {
             }}>
               <WifiOff size={14} color="#ef4444" />
               <div className="flex-1">
-                <div style={{ fontSize: 10, fontWeight: 800, color: '#ef4444', letterSpacing: '0.04em' }}>BACKEND CONNECTION FAILED</div>
-                <div style={{ fontSize: 9, color: '#64748b', marginTop: 1 }}>{error}</div>
+                <div style={{ fontSize: 11, fontWeight: 800, color: '#ef4444', letterSpacing: '0.04em' }}>BACKEND CONNECTION FAILED</div>
+                <div style={{ fontSize: 11, color: '#64748b', marginTop: 1 }}>{error}</div>
               </div>
               <button
                 onClick={() => loadData()}
-                style={{ fontSize: 10, color: '#38bdf8', fontWeight: 700, cursor: 'pointer', background: 'rgba(56,189,248,0.1)', border: '1px solid rgba(56,189,248,0.3)', borderRadius: 5, padding: '4px 12px', whiteSpace: 'nowrap' }}
+                style={{ fontSize: 11, color: '#38bdf8', fontWeight: 700, cursor: 'pointer', background: 'rgba(56,189,248,0.1)', border: '1px solid rgba(56,189,248,0.3)', borderRadius: 5, padding: '4px 12px', whiteSpace: 'nowrap' }}
               >
                 Retry Connection
               </button>
@@ -404,10 +404,10 @@ function InfoBadge({ icon, label, value, accentColor = '#1e293b' }) {
       border: '1px solid rgba(30,41,59,0.9)',
       borderTop: `2px solid ${accentColor}`,
     }}>
-      <span style={{ fontSize: 12, lineHeight: 1, opacity: 0.85 }}>{icon}</span>
+      <span style={{ fontSize: 13.5, lineHeight: 1, opacity: 0.85 }}>{icon}</span>
       <div>
-        <div style={{ fontSize: 7.5, color: '#1e293b', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 800, lineHeight: 1 }}>{label}</div>
-        <div style={{ fontSize: 11, fontWeight: 800, color: '#e2e8f0', letterSpacing: '0.01em', lineHeight: 1.3, marginTop: 2 }}>{value}</div>
+        <div style={{ fontSize: 9, color: '#1e293b', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 800, lineHeight: 1 }}>{label}</div>
+        <div style={{ fontSize: 12, fontWeight: 800, color: '#e2e8f0', letterSpacing: '0.01em', lineHeight: 1.3, marginTop: 2 }}>{value}</div>
       </div>
     </div>
   )
@@ -430,8 +430,8 @@ function LoadingScreen() {
         </div>
       </div>
       <div style={{ textAlign: 'center' }}>
-        <div style={{ color: '#94a3b8', fontSize: 12, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase' }}>Initializing Engine</div>
-        <div style={{ color: '#1e293b', fontSize: 10, marginTop: 6, letterSpacing: '0.02em' }}>Connecting to backend server on port 8000…</div>
+        <div style={{ color: '#94a3b8', fontSize: 13.5, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase' }}>Initializing Engine</div>
+        <div style={{ color: '#1e293b', fontSize: 11, marginTop: 6, letterSpacing: '0.02em' }}>Connecting to backend server on port 8000…</div>
       </div>
     </div>
   )

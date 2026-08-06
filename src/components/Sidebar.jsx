@@ -38,7 +38,7 @@ export default function Sidebar({ activeMenu, onMenuChange, well, lastUpdated })
           color: #94a3b8;
           cursor: pointer;
           transition: all 0.2s ease;
-          font-size: 11px;
+          font-size: 12px;
           font-weight: 500;
           letter-spacing: 0.02em;
         }
@@ -69,8 +69,8 @@ export default function Sidebar({ activeMenu, onMenuChange, well, lastUpdated })
             <Cpu size={16} color="#fff" />
           </div>
           <div>
-            <div style={{ fontSize: 13, fontWeight: 900, color: '#f8fafc', lineHeight: 1.1, letterSpacing: '0.02em' }}>HF Design</div>
-            <div style={{ fontSize: 12, fontWeight: 800, color: '#38bdf8', lineHeight: 1.1, letterSpacing: '0.05em' }}>Engine</div>
+            <div style={{ fontSize: 14.5, fontWeight: 900, color: '#f8fafc', lineHeight: 1.1, letterSpacing: '0.02em' }}>HF Design</div>
+            <div style={{ fontSize: 13.5, fontWeight: 800, color: '#38bdf8', lineHeight: 1.1, letterSpacing: '0.05em' }}>Engine</div>
           </div>
         </div>
       </div>
@@ -78,7 +78,7 @@ export default function Sidebar({ activeMenu, onMenuChange, well, lastUpdated })
       {/* ── Navigation ─────────────────────────────────────────────────────── */}
       <nav className="flex-1 py-4 overflow-y-auto custom-scrollbar">
         <div style={{
-          fontSize: 9, color: '#475569', fontWeight: 700,
+          fontSize: 11, color: '#475569', fontWeight: 700,
           letterSpacing: '0.12em', padding: '0 16px 8px', textTransform: 'uppercase'
         }}>
           Navigation
@@ -100,7 +100,7 @@ export default function Sidebar({ activeMenu, onMenuChange, well, lastUpdated })
       {/* ── Well Overview Panel ────────────────────────────────────────────── */}
       {well && (
         <div className="px-3 py-4 border-t" style={{ borderColor: 'rgba(56,189,248,0.1)', background: 'rgba(7,15,34,0.4)' }}>
-          <div style={{ fontSize: 9, color: '#38bdf8', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 10, px: 2 }}>
+          <div style={{ fontSize: 11, color: '#38bdf8', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 10, px: 2 }}>
             Well Overview
           </div>
           
@@ -124,7 +124,7 @@ export default function Sidebar({ activeMenu, onMenuChange, well, lastUpdated })
             border: '1px solid rgba(34,197,94,0.1)'
           }}>
             <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#22c55e', boxShadow: '0 0 6px #22c55e' }} />
-            <span style={{ fontSize: 9, color: '#475569', fontWeight: 500 }}>
+            <span style={{ fontSize: 11, color: '#475569', fontWeight: 500 }}>
               Updated: <span style={{ color: '#94a3b8' }}>{lastUpdated}</span>
             </span>
           </div>
@@ -141,8 +141,8 @@ function WellRow({ label, value }) {
       padding: '4px 8px', borderRadius: 4,
       background: 'rgba(255,255,255,0.015)'
     }}>
-      <span style={{ fontSize: 9, color: '#64748b', fontWeight: 600 }}>{label}</span>
-      <span style={{ fontSize: 10, color: '#f8fafc', fontWeight: 700 }}>{value}</span>
+      <span style={{ fontSize: 11, color: '#64748b', fontWeight: 600 }}>{label}</span>
+      <span style={{ fontSize: 11, color: '#f8fafc', fontWeight: 700 }}>{value}</span>
     </div>
   )
 }

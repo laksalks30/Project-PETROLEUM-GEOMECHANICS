@@ -32,7 +32,7 @@ export default function DesignSummary({ design }) {
         borderLeft: '2px solid #38bdf8'
       }}>
         <ClipboardList size={12} color="#38bdf8" />
-        <span style={{ fontSize: 10, fontWeight: 800, color: '#f8fafc', letterSpacing: '0.08em' }}>DESIGN SUMMARY</span>
+        <span style={{ fontSize: 11, fontWeight: 800, color: '#f8fafc', letterSpacing: '0.08em' }}>DESIGN SUMMARY</span>
       </div>
       
       {/* ── Content ──────────────────────────────────────────────────────── */}
@@ -43,15 +43,15 @@ export default function DesignSummary({ design }) {
             borderBottom: '1px solid rgba(255,255,255,0.04)',
             transition: 'background 0.2s'
           }}>
-            <span className="flex items-center gap-2" style={{ fontSize: 9, color: type === 'input' ? '#cbd5e1' : '#94a3b8' }}>
+            <span className="flex items-center gap-2" style={{ fontSize: 11, color: type === 'input' ? '#cbd5e1' : '#94a3b8' }}>
               {label}
               {type === 'input' ? (
-                <div className="flex items-center justify-center w-3 h-3 rounded bg-blue-500/20 text-blue-400 border border-blue-500/30" style={{ fontSize: 7, fontWeight: 800 }} title="Editable Input">IN</div>
+                <div className="flex items-center justify-center w-3 h-3 rounded bg-blue-500/20 text-blue-400 border border-blue-500/30" style={{ fontSize: 8.5, fontWeight: 800 }} title="Editable Input">IN</div>
               ) : (
-                <div className="flex items-center justify-center w-3 h-3 rounded bg-slate-700/50 text-slate-400 border border-slate-600/50" style={{ fontSize: 7, fontWeight: 800 }} title="Auto-Calculated Output">FX</div>
+                <div className="flex items-center justify-center w-3 h-3 rounded bg-slate-700/50 text-slate-400 border border-slate-600/50" style={{ fontSize: 8.5, fontWeight: 800 }} title="Auto-Calculated Output">FX</div>
               )}
             </span>
-            <span style={{ fontSize: 10, color, fontWeight: type === 'input' ? 800 : 600, letterSpacing: '0.02em' }}>{value}</span>
+            <span style={{ fontSize: 11, color, fontWeight: type === 'input' ? 800 : 600, letterSpacing: '0.02em' }}>{value}</span>
           </div>
         ))}
       </div>

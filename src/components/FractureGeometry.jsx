@@ -29,8 +29,8 @@ export default function FractureGeometry({ geometry }) {
         borderLeft: '2px solid #38bdf8'
       }}>
         <GitBranch size={12} color="#38bdf8" />
-        <span style={{ fontSize: 10, fontWeight: 800, color: '#f8fafc', letterSpacing: '0.08em' }}>FRACTURE GEOMETRY</span>
-        <span style={{ fontSize: 9, color: '#64748b', fontWeight: 600, marginLeft: 4, letterSpacing: '0.05em' }}>(DESIGN)</span>
+        <span style={{ fontSize: 11, fontWeight: 800, color: '#f8fafc', letterSpacing: '0.08em' }}>FRACTURE GEOMETRY</span>
+        <span style={{ fontSize: 11, color: '#64748b', fontWeight: 600, marginLeft: 4, letterSpacing: '0.05em' }}>(DESIGN)</span>
       </div>
 
       <div className="flex-1 flex flex-row overflow-hidden">
@@ -43,8 +43,8 @@ export default function FractureGeometry({ geometry }) {
         <div className="w-[175px] flex flex-col justify-center px-3 py-2 border-l" style={{ borderColor: 'rgba(30,41,59,0.8)', background: '#070f22' }}>
           {stats.map((s, i) => (
             <div key={i} className="flex justify-between items-center py-2 border-b" style={{ borderColor: 'rgba(255,255,255,0.04)' }}>
-              <span style={{ fontSize: 7.5, color: s.highlight ? '#38bdf8' : '#64748b', fontWeight: 700, letterSpacing: '0.05em', width: '55%' }}>{s.label}</span>
-              <span style={{ fontSize: 10, color: s.highlight ? '#f8fafc' : '#e2e8f0', fontWeight: 800, textAlign: 'right', width: '45%' }}>{s.value}</span>
+              <span style={{ fontSize: 9, color: s.highlight ? '#38bdf8' : '#64748b', fontWeight: 700, letterSpacing: '0.05em', width: '55%' }}>{s.label}</span>
+              <span style={{ fontSize: 11, color: s.highlight ? '#f8fafc' : '#e2e8f0', fontWeight: 800, textAlign: 'right', width: '45%' }}>{s.value}</span>
             </div>
           ))}
         </div>

@@ -22,12 +22,12 @@ export default function DataRequirements() {
           Data Requirements
         </div>
         <div className="flex-1 overflow-auto p-4">
-          <table className="tbl" style={{ fontSize: 13, width: '100%' }}>
+          <table className="tbl" style={{ fontSize: 14.5, width: '100%' }}>
             <thead>
               <tr>
-                <th style={{ fontSize: 11, padding: '10px' }}>Data Group</th>
-                <th style={{ fontSize: 11, padding: '10px' }}>Required Parameters</th>
-                <th style={{ fontSize: 11, padding: '10px' }}>Quality/Calibration Requirement</th>
+                <th style={{ fontSize: 12, padding: '10px' }}>Data Group</th>
+                <th style={{ fontSize: 12, padding: '10px' }}>Required Parameters</th>
+                <th style={{ fontSize: 12, padding: '10px' }}>Quality/Calibration Requirement</th>
               </tr>
             </thead>
             <tbody>

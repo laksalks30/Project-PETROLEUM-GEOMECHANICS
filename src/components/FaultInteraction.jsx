@@ -8,7 +8,7 @@ function RiskBadge({ level }) {
     Low:      { class: 'badge-green',  label: 'LOW RISK' },
   }
   const { class: cls, label } = cfg[level] || cfg['Low']
-  return <span className={`badge ${cls}`} style={{ padding: '2px 8px', fontSize: 9 }}>{label}</span>
+  return <span className={`badge ${cls}`} style={{ padding: '2px 8px', fontSize: 11 }}>{label}</span>
 }
 
 export default function FaultInteraction({ containment }) {
@@ -25,7 +25,7 @@ export default function FaultInteraction({ containment }) {
 
   return (
     <div className="card h-full flex flex-col" id="panel-fault">
-      <div className="card-title text-[#38bdf8]" style={{ padding: '6px 10px', fontSize: 11, fontWeight: 700, letterSpacing: '0.05em', borderBottom: '1px solid rgba(56,189,248,0.1)' }}>
+      <div className="card-title text-[#38bdf8]" style={{ padding: '6px 10px', fontSize: 12, fontWeight: 700, letterSpacing: '0.05em', borderBottom: '1px solid rgba(56,189,248,0.1)' }}>
         <div className="flex items-center gap-2">
           <MapPin size={12} />
           FAULT INTERACTION
@@ -41,7 +41,7 @@ export default function FaultInteraction({ containment }) {
         </div>
 
         <div className="flex items-center justify-between bg-[#0f172a] px-3 py-2 rounded-md border border-[#1e293b]">
-          <span style={{ fontSize: 10, color: '#94a3b8', fontWeight: 600, letterSpacing: '0.02em', textTransform: 'uppercase' }}>Fault Risk Assessment</span>
+          <span style={{ fontSize: 11, color: '#94a3b8', fontWeight: 600, letterSpacing: '0.02em', textTransform: 'uppercase' }}>Fault Risk Assessment</span>
           <RiskBadge level={fault_risk} />
         </div>
 
@@ -49,9 +49,9 @@ export default function FaultInteraction({ containment }) {
           <div className="rounded-md p-2 mt-0.5" style={{ background: 'linear-gradient(135deg, rgba(245,158,11,0.15), rgba(15,23,42,1))', border: '1px solid rgba(245,158,11,0.3)', borderLeft: '3px solid #f59e0b' }}>
             <div className="flex items-center gap-2 mb-1">
               <AlertTriangle size={12} color="#f59e0b" />
-              <span style={{ fontSize: 10, fontWeight: 800, color: '#f59e0b', letterSpacing: '0.05em' }}>P90 FRACTURE MAY INTERSECT FAULT</span>
+              <span style={{ fontSize: 11, fontWeight: 800, color: '#f59e0b', letterSpacing: '0.05em' }}>P90 FRACTURE MAY INTERSECT FAULT</span>
             </div>
-            <div style={{ fontSize: 10, color: '#f8fafc', paddingLeft: 20 }}>
+            <div style={{ fontSize: 11, color: '#f8fafc', paddingLeft: 20 }}>
               P90 xf <span className="font-bold text-[#ef4444]">{xf_P90_ft} ft</span> ≥ Fault Distance <span className="font-bold text-[#f59e0b]">{fault_distance_ft} ft</span>
             </div>
           </div>
@@ -73,8 +73,8 @@ export default function FaultInteraction({ containment }) {
 function Row({ label, value, color, isLast }) {
   return (
     <div className="flex items-center justify-between px-3 py-1.5" style={{ borderBottom: isLast ? 'none' : '1px solid rgba(255,255,255,0.03)' }}>
-      <span style={{ fontSize: 10, color: '#94a3b8', letterSpacing: '0.01em' }}>{label}</span>
-      <span style={{ fontSize: 11, color, fontWeight: 700 }}>{value}</span>
+      <span style={{ fontSize: 11, color: '#94a3b8', letterSpacing: '0.01em' }}>{label}</span>
+      <span style={{ fontSize: 12, color, fontWeight: 700 }}>{value}</span>
     </div>
   )
 }
@@ -90,7 +90,7 @@ function FaultDistanceViz({ xf, xfP90, faultDist }) {
   return (
     <div className="flex flex-col mt-1">
       <div className="flex justify-between items-center mb-1.5">
-        <span style={{ fontSize: 9, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Fracture Reach vs Fault</span>
+        <span style={{ fontSize: 11, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Fracture Reach vs Fault</span>
       </div>
       
       <div style={{ position: 'relative', height: 28, background: 'rgba(15,23,42,0.8)', borderRadius: 4, border: '1px solid rgba(30,41,59,1)', overflow: 'hidden' }}>
@@ -138,15 +138,15 @@ function FaultDistanceViz({ xf, xfP90, faultDist }) {
       {/* Legend below the bar */}
       <div className="flex justify-between items-center mt-1.5 px-1 relative h-4">
         {/* xf label */}
-        <div style={{ position: 'absolute', left: `${xf_pct}%`, transform: 'translateX(-50%)', fontSize: 9, color: '#a855f7', fontWeight: 600 }}>
+        <div style={{ position: 'absolute', left: `${xf_pct}%`, transform: 'translateX(-50%)', fontSize: 11, color: '#a855f7', fontWeight: 600 }}>
           Base xf
         </div>
         {/* P90 label */}
-        <div style={{ position: 'absolute', left: `${p90_pct}%`, transform: 'translateX(-50%)', fontSize: 9, color: isBreach ? '#ef4444' : '#f59e0b', fontWeight: 600 }}>
+        <div style={{ position: 'absolute', left: `${p90_pct}%`, transform: 'translateX(-50%)', fontSize: 11, color: isBreach ? '#ef4444' : '#f59e0b', fontWeight: 600 }}>
           P90
         </div>
         {/* Fault label */}
-        <div style={{ position: 'absolute', left: `${fault_pct}%`, transform: 'translateX(-50%)', top: -45, fontSize: 9, color: '#fca5a5', fontWeight: 800, background: '#7f1d1d', padding: '1px 4px', borderRadius: 2 }}>
+        <div style={{ position: 'absolute', left: `${fault_pct}%`, transform: 'translateX(-50%)', top: -45, fontSize: 11, color: '#fca5a5', fontWeight: 800, background: '#7f1d1d', padding: '1px 4px', borderRadius: 2 }}>
           FAULT
         </div>
       </div>

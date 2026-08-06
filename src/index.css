@@ -26,7 +26,7 @@ html, body, #root {
   background: var(--bg-primary);
   color: var(--text-primary);
   font-family: 'Inter', system-ui, sans-serif;
-  font-size: 13px;
+  font-size: 14.5px;
   overflow: hidden;
 }
 
@@ -51,7 +51,7 @@ html, body, #root {
   box-shadow: 0 0 16px rgba(59,130,246,0.08);
 }
 .card-title {
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -68,7 +68,7 @@ html, body, #root {
   letter-spacing: -0.01em;
 }
 .kpi-unit {
-  font-size: 11px;
+  font-size: 12px;
   color: var(--text-muted);
   margin-left: 2px;
 }
@@ -80,7 +80,7 @@ html, body, #root {
   gap: 4px;
   padding: 2px 7px;
   border-radius: 999px;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.05em;
   text-transform: uppercase;
@@ -97,7 +97,7 @@ html, body, #root {
   border: 1px solid rgba(239,68,68,0.3);
   border-radius: 6px;
   padding: 8px 10px;
-  font-size: 11px;
+  font-size: 12px;
   color: #fca5a5;
 }
 .alert-yellow {
@@ -105,19 +105,19 @@ html, body, #root {
   border: 1px solid rgba(245,158,11,0.3);
   border-radius: 6px;
   padding: 8px 10px;
-  font-size: 11px;
+  font-size: 12px;
   color: #fcd34d;
 }
 
 /* ── Tables ────────────────────────────────────────── */
-.tbl { width: 100%; border-collapse: collapse; font-size: 11px; }
+.tbl { width: 100%; border-collapse: collapse; font-size: 12px; }
 .tbl th {
   background: rgba(59,130,246,0.08);
   color: var(--text-muted);
   font-weight: 600;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  font-size: 9px;
+  font-size: 11px;
   padding: 4px 8px;
   text-align: left;
   border-bottom: 1px solid var(--border);
@@ -139,7 +139,7 @@ html, body, #root {
   padding: 7px 12px;
   border-radius: 6px;
   cursor: pointer;
-  font-size: 12px;
+  font-size: 13.5px;
   color: var(--text-muted);
   transition: all 0.15s;
 }
@@ -164,7 +164,7 @@ html, body, #root {
   align-items: center;
   padding: 4px 0;
   border-bottom: 1px solid rgba(59,130,246,0.06);
-  font-size: 11px;
+  font-size: 12px;
 }
 .data-row:last-child { border-bottom: none; }
 .data-row .label { color: var(--text-muted); }
@@ -198,8 +198,8 @@ html, body, #root {
   border-radius: 5px;
   padding: 6px 8px;
 }
-.mem-cell .mc-label { font-size: 9px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
-.mem-cell .mc-value { font-size: 13px; font-weight: 700; margin-top: 1px; }
+.mem-cell .mc-label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+.mem-cell .mc-value { font-size: 14.5px; font-weight: 700; margin-top: 1px; }
 
 /* ── Risk Matrix ───────────────────────────────────── */
 .risk-cell {
@@ -209,7 +209,7 @@ html, body, #root {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
   cursor: default;
   transition: transform 0.15s;
