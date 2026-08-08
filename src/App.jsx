@@ -347,15 +347,17 @@ export default function App() {
           <LoadingScreen />
         ) : (
           <>
-            {activeMenu === 'hydraulic-frac' && (
-              <main style={{ flex: 1, overflow: 'auto', padding: '6px 8px', display: 'flex', flexDirection: 'column', gap: 6 }}>
-
-                {/* Row 1: COMMON CALIBRATED MEM SUMMARY (Full Width) */}
-                <div style={{ display: 'flex', flexDirection: 'column', flexShrink: 0, minHeight: 250, marginBottom: 6 }}>
+            {activeMenu === 'common-mem' && (
+              <main style={{ flex: 1, overflow: 'auto', padding: '12px 16px', display: 'flex', flexDirection: 'column', gap: 6 }}>
+                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minHeight: 250 }}>
                   <MEMSummary mem={data?.mem} stressProfile={data?.stress_profile} />
                 </div>
+              </main>
+            )}
 
-                {/* Row 1.5: DFIT Analysis & Full Stress Profile (Fallback/Detailed) */}
+            {activeMenu === 'hydraulic-frac' && (
+              <main style={{ flex: 1, overflow: 'auto', padding: '6px 8px', display: 'flex', flexDirection: 'column', gap: 6 }}>
+                {/* Row 1: DFIT Analysis & Full Stress Profile */}
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 6, minHeight: 220, flexShrink: 0 }}>
                   <DFITAnalysis  dfit={data?.dfit} />
                   <StressProfile stressProfile={data?.stress_profile} />
