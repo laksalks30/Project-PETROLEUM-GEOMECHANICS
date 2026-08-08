@@ -6,6 +6,7 @@ import Sidebar             from './components/Sidebar.jsx'
 import KPIStrip            from './components/KPIStrip.jsx'
 import MEMSummary          from './components/MEMSummary.jsx'
 import TargetIntervalSummary from './components/TargetIntervalSummary.jsx'
+import BoreholeStability  from './components/BoreholeStability.jsx'
 import DFITAnalysis        from './components/DFITAnalysis.jsx'
 import StressProfile       from './components/StressProfile.jsx'
 import FractureGeometry    from './components/FractureGeometry.jsx'
@@ -428,6 +429,10 @@ export default function App() {
                   <RiskSection risk={data?.risk} />
                 </div>
               </main>
+            )}
+
+            {activeMenu === 'borehole-stability' && (
+              <BoreholeStability bhs={data?.bhs} mem={data?.mem} well={data?.well} stressProfile={data?.stress_profile} />
             )}
 
             {activeMenu === 'data-requirements' && <DataRequirements />}

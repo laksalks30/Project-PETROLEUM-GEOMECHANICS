@@ -52,6 +52,7 @@ from calculations.fracture_geometry import calc_fracture_geometry
 from calculations.proppant_placement import calc_proppant_placement
 from calculations.containment_fault import calc_containment_fault
 from calculations.uncertainty_ml import monte_carlo_uncertainty, calc_sensitivity_tornado
+from calculations.borehole_stability_calc import calc_borehole_stability
 
 logger.info("All modules imported OK")
 
@@ -668,6 +669,25 @@ def api_risk():
     }
 
 
+@app.get("/api/borehole-stability")
+def api_borehole_stability():
+    """Return Borehole Stability Engine results (Kirsch + Mohr-Coulomb)."""
+    mem  = get_mem()
+    well = get_well()
+
+    return calc_borehole_stability(
+        Pp_psi              = mem.get("Pp_psi", 5076),
+        Sv_psi              = mem.get("Sv_psi", 10157),
+        Shmin_psi           = mem.get("Shmin_psi", 6962),
+        SHmax_psi           = mem.get("SHmax_psi", 8412),
+        UCS_psi             = mem.get("UCS_psi", 4351),
+        T0_psi              = mem.get("T0_psi", 435),
+        friction_angle_deg  = mem.get("friction_angle_deg", 30),
+        Biot                = mem.get("Biot", 1.0),
+        TVD_ft              = well.get("tvd_ft", 9843),
+    )
+
+
 @app.get("/api/dashboard")
 def api_dashboard():
     """Consolidated endpoint — returns all dashboard data in one call."""
@@ -685,6 +705,7 @@ def api_dashboard():
         "uncertainty": api_uncertainty(),
         "sensitivity": api_sensitivity(),
         "risk": api_risk(),
+        "bhs": api_borehole_stability(),
     }
 
 
