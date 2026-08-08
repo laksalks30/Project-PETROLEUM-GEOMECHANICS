@@ -222,22 +222,83 @@ def api_well():
 
 @app.get("/api/mem")
 def api_mem():
-    """Return Common MEM properties."""
+    """Return Common MEM properties and calculated profiles."""
     mem = get_mem()
     design = get_design()
     well = get_well()
 
     # Plane-strain modulus
-    E = mem["E_static_MMpsi"]
-    nu = mem["nu_static"]
-    Eprime = E / (1 - nu ** 2)
+    E = mem.get("E_static_MMpsi", 0)
+    nu = mem.get("nu_static", 0)
+    Eprime = E / (1 - nu ** 2) if nu < 1 else E
+    
+    tvd = well.get("tvd_ft", 1)
+    if tvd <= 0: tvd = 1
+    
+    biot = mem.get("Biot", 1.0)
+    
+    Pp = mem.get("Pp_psi", 0)
+    Sv = mem.get("Sv_psi", 0)
+    Shmin = mem.get("Shmin_psi", 0)
+    SHmax = mem.get("SHmax_psi", 0)
+    
+    # Gradients (psi/ft)
+    grad_Pp = Pp / tvd
+    grad_Sv = Sv / tvd
+    grad_Shmin = Shmin / tvd
+    grad_SHmax = SHmax / tvd
+    
+    # Equivalent Mud Weight (ppg)
+    emw_Pp = Pp / (0.052 * tvd)
+    emw_Sv = Sv / (0.052 * tvd)
+    emw_Shmin = Shmin / (0.052 * tvd)
+    emw_SHmax = SHmax / (0.052 * tvd)
+    
+    # Effective Stresses
+    Pp_eff = biot * Pp
+    eff_Sv = Sv - Pp_eff
+    eff_Shmin = Shmin - Pp_eff
+    eff_SHmax = SHmax - Pp_eff
+    
+    # Stress Regime determination
+    if Sv > SHmax and SHmax > Shmin:
+        regime = "NORMAL"
+        regime_desc = "Sv > Shmax > Shmin"
+    elif SHmax > Sv and Sv > Shmin:
+        regime = "STRIKE-SLIP"
+        regime_desc = "Shmax > Sv > Shmin"
+    elif SHmax > Shmin and Shmin > Sv:
+        regime = "REVERSE"
+        regime_desc = "Shmax > Shmin > Sv"
+    else:
+        regime = "COMPLEX"
+        regime_desc = "Undefined"
 
     return {
         **mem,
         "Eprime_MMpsi": round(Eprime, 3),
-        "target_tvd_ft": well["tvd_ft"],
-        "net_pay_ft": well["net_pay_ft"],
-        "fracture_height_ft": design["fracture_height_ft"],
+        "target_tvd_ft": well.get("tvd_ft", 0),
+        "net_pay_ft": well.get("net_pay_ft", 0),
+        "fracture_height_ft": design.get("fracture_height_ft", 0),
+        "gradients": {
+            "Pp": round(grad_Pp, 3),
+            "Sv": round(grad_Sv, 3),
+            "Shmin": round(grad_Shmin, 3),
+            "SHmax": round(grad_SHmax, 3)
+        },
+        "emw": {
+            "Pp": round(emw_Pp, 2),
+            "Sv": round(emw_Sv, 2),
+            "Shmin": round(emw_Shmin, 2),
+            "SHmax": round(emw_SHmax, 2)
+        },
+        "effective": {
+            "Sv": round(eff_Sv, 0),
+            "Shmin": round(eff_Shmin, 0),
+            "SHmax": round(eff_SHmax, 0)
+        },
+        "stress_regime_calc": regime,
+        "stress_regime_desc": regime_desc
     }
 
 

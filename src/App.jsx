@@ -350,9 +350,13 @@ export default function App() {
             {activeMenu === 'hydraulic-frac' && (
               <main style={{ flex: 1, overflow: 'auto', padding: '6px 8px', display: 'flex', flexDirection: 'column', gap: 6 }}>
 
-                {/* Row 1: MEM Summary | DFIT Analysis | Stress Profile */}
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.2fr 1fr', gap: 6, minHeight: 220, flexShrink: 0 }}>
-                  <MEMSummary    mem={data?.mem} />
+                {/* Row 1: COMMON CALIBRATED MEM SUMMARY (Full Width) */}
+                <div style={{ display: 'flex', flexDirection: 'column', flexShrink: 0, minHeight: 250, marginBottom: 6 }}>
+                  <MEMSummary mem={data?.mem} stressProfile={data?.stress_profile} />
+                </div>
+
+                {/* Row 1.5: DFIT Analysis & Full Stress Profile (Fallback/Detailed) */}
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 6, minHeight: 220, flexShrink: 0 }}>
                   <DFITAnalysis  dfit={data?.dfit} />
                   <StressProfile stressProfile={data?.stress_profile} />
                 </div>
