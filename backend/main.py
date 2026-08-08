@@ -91,6 +91,35 @@ def get_mem() -> dict:
 def get_dfit() -> dict:
     return DEFAULT_DATA["dfit"]
 
+def _get_shmin_at_tvd(target_tvd_ft: float) -> float:
+    """
+    Ambil Shmin_psi dari data log Stress vs Depth (stress_vs_depth) 
+    di titik yang paling mendekati target_tvd_ft.
+    
+    Jika data stress_vs_depth kosong (tidak di-upload), fallback ke:
+    1. DFIT closure_psi (jika ada)
+    2. MEM Shmin_psi (parameter statis)
+    
+    Ini memastikan Pressure Components selalu konsisten dengan 
+    grafik Stress Profile vs Depth yang ditampilkan di dashboard.
+    """
+    svd = DEFAULT_DATA.get("stress_vs_depth", [])
+    
+    if svd and len(svd) > 0:
+        # Cari titik kedalaman yang paling mendekati target TVD
+        closest = min(svd, key=lambda p: abs(p.get("tvd_ft", 0) - target_tvd_ft))
+        shmin_from_log = closest.get("Shmin_psi")
+        if shmin_from_log and shmin_from_log > 0:
+            return round(shmin_from_log, 0)
+    
+    # Fallback: pakai DFIT calibrated closure pressure → MEM Shmin
+    dfit = get_dfit()
+    mem  = get_mem()
+    return dfit.get("closure_psi", mem["Shmin_psi"])
+
+
+
+
 def _build_geom() -> dict:
     """Central helper: compute fracture geometry from current DEFAULT_DATA."""
     mem    = get_mem()
@@ -239,17 +268,20 @@ def api_dfit():
 
 @app.get("/api/pressure")
 def api_pressure():
-    """Return treating pressure components."""
-    mem = get_mem()
+    """Return treating pressure components.
+    
+    Shmin diambil dari log Stress vs Depth pada kedalaman TVD sumur,
+    sehingga Pressure Components selalu konsisten dengan visualisasi grafik.
+    Jika log tidak ada (belum upload Excel), fallback ke DFIT closure → MEM Shmin.
+    """
     design = get_design()
-    well = get_well()
-    dfit = get_dfit()
+    well   = get_well()
 
-    # Use DFIT calibrated Shmin (closure pressure) as the true minimum stress
-    Shmin_calibrated = dfit.get("closure_psi", mem["Shmin_psi"])
+    # ── Shmin dari log Stress vs Depth di kedalaman TVD aktual ──────────────
+    Shmin_at_tvd = _get_shmin_at_tvd(well["tvd_ft"])
 
     return calc_treating_pressures(
-        Shmin_psi=Shmin_calibrated,
+        Shmin_psi=Shmin_at_tvd,
         Pnet_psi=design["Pnet_psi"],
         DeltaPperf_psi=design["DeltaPperf_psi"],
         DeltaPNWB_psi=design["DeltaPNWB_psi"],
@@ -257,6 +289,7 @@ def api_pressure():
         TVD_ft=well["tvd_ft"],
         DeltaPtubing_psi=design["DeltaPtubing_psi"],
     )
+
 
 
 @app.get("/api/fracture-geometry")

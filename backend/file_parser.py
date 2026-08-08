@@ -523,6 +523,19 @@ def parse_uploaded_file(file_path: str, filename: str) -> Dict[str, Any]:
                 if svd:
                     data["stress_vs_depth"] = svd
 
+                    # ── Auto-extract Well Depth Info dari Log ──────────────
+                    # TVD aktual sumur = kedalaman terbesar di log (titik paling bawah)
+                    all_tvd = [p["tvd_ft"] for p in svd if p.get("tvd_ft", 0) > 0]
+                    if all_tvd:
+                        max_tvd = max(all_tvd)
+                        min_tvd = min(all_tvd)
+                        data["well"]["tvd_ft"] = round(max_tvd, 0)
+                        # Selalu override dari data log (bukan estimasi default)
+                        data["well"]["reservoir_base_ft"] = round(max_tvd, 0)
+                        data["well"]["reservoir_top_ft"]  = round(min_tvd + (max_tvd - min_tvd) * 0.85, 0)
+
+
+
                 # ── Pumping Schedule ──────────────────────────────────────
                 ps = extract_pumping_schedule(xls)
                 if ps:
