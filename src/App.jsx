@@ -69,7 +69,7 @@ function Toast({ toasts, removeToast }) {
 
 // ─── App ─────────────────────────────────────────────────────────────────────
 export default function App() {
-  const [activeMenu, setActiveMenu]   = useState('hydraulic-frac')
+  const [activeMenu, setActiveMenu]   = useState('overview')
   const [data, setData]               = useState(null)
   const [loading, setLoading]         = useState(true)
   const [error, setError]             = useState(null)
@@ -348,6 +348,46 @@ export default function App() {
           <LoadingScreen />
         ) : (
           <>
+            {/* ─── OVERVIEW: Full dashboard (MEM + HF + Risk) ─────────── */}
+            {activeMenu === 'overview' && (
+              <main style={{ flex: 1, overflow: 'auto', padding: '6px 8px', display: 'flex', flexDirection: 'column', gap: 6 }}>
+                {/* Row 0: COMMON CALIBRATED MEM SUMMARY – full width */}
+                <div style={{ flexShrink: 0, minHeight: 250 }}>
+                  <MEMSummary mem={data?.mem} stressProfile={data?.stress_profile} />
+                </div>
+
+                {/* Row 1: Target Interval Summary | DFIT Analysis | Stress Profile */}
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.2fr 1fr', gap: 6, minHeight: 220, flexShrink: 0 }}>
+                  <TargetIntervalSummary mem={data?.mem} />
+                  <DFITAnalysis  dfit={data?.dfit} />
+                  <StressProfile stressProfile={data?.stress_profile} />
+                </div>
+
+                {/* Row 2: Fracture Geometry | Design Summary | Pumping Schedule | Pressure */}
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1.4fr 1fr', gap: 6, minHeight: 230, flexShrink: 0 }}>
+                  <FractureGeometry   geometry={data?.fracture_geometry} />
+                  <DesignSummary      design={data?.design_summary} />
+                  <PumpingSchedule    schedule={data?.pumping_schedule} />
+                  <PressureComponents pressure={data?.pressure} />
+                </div>
+
+                {/* Row 3: Perforation | Containment | Fault | Uncertainty | Sensitivity */}
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1.1fr 1.3fr', gap: 6, minHeight: 210, flexShrink: 0 }}>
+                  <PerforationCluster  design={data?.design_summary} />
+                  <ContainmentAnalysis containment={data?.containment} />
+                  <FaultInteraction    containment={data?.containment} />
+                  <UncertaintySummary  uncertainty={data?.uncertainty} />
+                  <SensitivityTornado  sensitivity={data?.sensitivity} />
+                </div>
+
+                {/* Row 4: Risk Assessment */}
+                <div style={{ minHeight: 160, flexShrink: 0 }}>
+                  <RiskSection risk={data?.risk} />
+                </div>
+              </main>
+            )}
+
+            {/* ─── COMMON MEM: Full-width detail view ─────────────────── */}
             {activeMenu === 'common-mem' && (
               <main style={{ flex: 1, overflow: 'auto', padding: '12px 16px', display: 'flex', flexDirection: 'column', gap: 6 }}>
                 <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minHeight: 250 }}>
@@ -356,6 +396,7 @@ export default function App() {
               </main>
             )}
 
+            {/* ─── HYDRAULIC FRACTURING: Design panels ────────────────── */}
             {activeMenu === 'hydraulic-frac' && (
               <main style={{ flex: 1, overflow: 'auto', padding: '6px 8px', display: 'flex', flexDirection: 'column', gap: 6 }}>
                 {/* Row 1: Target Interval Summary | DFIT Analysis | Stress Profile */}
