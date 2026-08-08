@@ -5,6 +5,7 @@ import { fetchDashboard } from './api.js'
 import Sidebar             from './components/Sidebar.jsx'
 import KPIStrip            from './components/KPIStrip.jsx'
 import MEMSummary          from './components/MEMSummary.jsx'
+import TargetIntervalSummary from './components/TargetIntervalSummary.jsx'
 import DFITAnalysis        from './components/DFITAnalysis.jsx'
 import StressProfile       from './components/StressProfile.jsx'
 import FractureGeometry    from './components/FractureGeometry.jsx'
@@ -357,8 +358,9 @@ export default function App() {
 
             {activeMenu === 'hydraulic-frac' && (
               <main style={{ flex: 1, overflow: 'auto', padding: '6px 8px', display: 'flex', flexDirection: 'column', gap: 6 }}>
-                {/* Row 1: DFIT Analysis & Full Stress Profile */}
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 6, minHeight: 220, flexShrink: 0 }}>
+                {/* Row 1: Target Interval Summary | DFIT Analysis | Stress Profile */}
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.2fr 1fr', gap: 6, minHeight: 220, flexShrink: 0 }}>
+                  <TargetIntervalSummary mem={data?.mem} />
                   <DFITAnalysis  dfit={data?.dfit} />
                   <StressProfile stressProfile={data?.stress_profile} />
                 </div>
