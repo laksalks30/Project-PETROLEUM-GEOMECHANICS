@@ -93,29 +93,36 @@ def get_dfit() -> dict:
 
 def _get_shmin_at_tvd(target_tvd_ft: float) -> float:
     """
-    Ambil Shmin_psi dari data log Stress vs Depth (stress_vs_depth) 
-    di titik yang paling mendekati target_tvd_ft.
+    Ambil Shmin_psi representatif dari log Stress vs Depth.
     
-    Jika data stress_vs_depth kosong (tidak di-upload), fallback ke:
-    1. DFIT closure_psi (jika ada)
-    2. MEM Shmin_psi (parameter statis)
+    Strategi 2-tahap:
+    1. Cari dalam window ±200 ft dari target_tvd_ft → ambil nilai Shmin tertinggi di sana
+       (titik terbesar = zona reservoir aktual, bukan anomali ujung log)
+    2. Jika window kosong, gunakan Shmin tertinggi secara keseluruhan dari log
+    3. Jika log kosong → fallback ke DFIT closure → MEM Shmin
     
-    Ini memastikan Pressure Components selalu konsisten dengan 
-    grafik Stress Profile vs Depth yang ditampilkan di dashboard.
+    Ini memastikan Pressure Components konsisten dengan puncak kurva
+    yang terlihat di visualisasi Stress vs Depth.
     """
     svd = DEFAULT_DATA.get("stress_vs_depth", [])
-    
+
     if svd and len(svd) > 0:
-        # Cari titik kedalaman yang paling mendekati target TVD
-        closest = min(svd, key=lambda p: abs(p.get("tvd_ft", 0) - target_tvd_ft))
-        shmin_from_log = closest.get("Shmin_psi")
+        # Stage 1: Cari titik dalam window ±200 ft dari target TVD
+        window = [p for p in svd if abs(p.get("tvd_ft", 0) - target_tvd_ft) <= 200]
+        if not window:
+            window = svd  # Fallback ke seluruh log jika window kosong
+
+        # Ambil titik dengan Shmin TERTINGGI di window (zona reservoir representatif)
+        best = max(window, key=lambda p: p.get("Shmin_psi", 0))
+        shmin_from_log = best.get("Shmin_psi")
         if shmin_from_log and shmin_from_log > 0:
             return round(shmin_from_log, 0)
-    
-    # Fallback: pakai DFIT calibrated closure pressure → MEM Shmin
+
+    # Fallback: DFIT calibrated closure → MEM Shmin statis
     dfit = get_dfit()
     mem  = get_mem()
     return dfit.get("closure_psi", mem["Shmin_psi"])
+
 
 
 
