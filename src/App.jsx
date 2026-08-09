@@ -385,6 +385,14 @@ export default function App() {
                 <div style={{ minHeight: 160, flexShrink: 0 }}>
                   <RiskSection risk={data?.risk} />
                 </div>
+                
+                {/* Row 5: Borehole Stability Engine */}
+                <div style={{ marginTop: 12, paddingTop: 12, borderTop: '2px dashed rgba(255,255,255,0.1)' }}>
+                  <div style={{ fontSize: 13, fontWeight: 800, color: '#f8fafc', marginBottom: 12, padding: '8px 12px', background: 'rgba(56,189,248,0.1)', borderLeft: '3px solid #38bdf8', letterSpacing: '0.05em' }}>
+                    BOREHOLE STABILITY ENGINE (Integrated View)
+                  </div>
+                  <BoreholeStability bhs={data?.bhs} mem={data?.mem} well={data?.well} stressProfile={data?.stress_profile} isNested={true} />
+                </div>
               </main>
             )}
 

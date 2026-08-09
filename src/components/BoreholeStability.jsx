@@ -6,15 +6,19 @@ import BHS_StressAndIndicators from './bhs/BHS_StressAndIndicators.jsx'
 import BHS_BottomSection from './bhs/BHS_BottomSection.jsx'
 import BHS_Footer from './bhs/BHS_Footer.jsx'
 
-export default function BoreholeStability({ bhs, mem, well, stressProfile }) {
+export default function BoreholeStability({ bhs, mem, well, stressProfile, isNested }) {
   if (!bhs) return (
     <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#334155', fontWeight: 700 }}>
       Loading Borehole Stability Engine...
     </div>
   )
 
+  const containerStyle = isNested 
+    ? { display: 'flex', flexDirection: 'column', gap: 6, background: 'transparent' }
+    : { flex: 1, overflow: 'auto', padding: '10px 14px', display: 'flex', flexDirection: 'column', gap: 6, background: '#050b14' }
+
   return (
-    <main style={{ flex: 1, overflow: 'auto', padding: '10px 14px', display: 'flex', flexDirection: 'column', gap: 6, background: '#050b14' }}>
+    <div style={containerStyle}>
       
       {/* 1. TOP ROW: KPI STRIP */}
       <BHS_KPIStrip bhs={bhs} mem={mem} />
@@ -39,6 +43,6 @@ export default function BoreholeStability({ bhs, mem, well, stressProfile }) {
       {/* 4. FOOTER: Status and Actions */}
       <BHS_Footer bhs={bhs} />
 
-    </main>
+    </div>
   )
 }
