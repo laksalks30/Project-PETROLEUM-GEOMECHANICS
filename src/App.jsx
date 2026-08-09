@@ -23,6 +23,7 @@ import DataRequirements    from './components/DataRequirements.jsx'
 import EngineWorkflow      from './components/EngineWorkflow.jsx'
 import ValidationChecklist from './components/ValidationChecklist.jsx'
 import UserGuide           from './components/UserGuide.jsx'
+import OverviewTab         from './components/OverviewTab.jsx'
 import Glossary            from './components/Glossary.jsx'
 
 
@@ -351,49 +352,7 @@ export default function App() {
           <>
             {/* ─── OVERVIEW: Full dashboard (MEM + HF + Risk) ─────────── */}
             {activeMenu === 'overview' && (
-              <main style={{ flex: 1, overflow: 'auto', padding: '6px 8px', display: 'flex', flexDirection: 'column', gap: 6 }}>
-                {/* Row 0: COMMON CALIBRATED MEM SUMMARY – full width */}
-                <div style={{ flexShrink: 0, minHeight: 250 }}>
-                  <MEMSummary mem={data?.mem} stressProfile={data?.stress_profile} />
-                </div>
-
-                {/* Row 1: Target Interval Summary | DFIT Analysis | Stress Profile */}
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.2fr 1fr', gap: 6, minHeight: 220, flexShrink: 0 }}>
-                  <TargetIntervalSummary mem={data?.mem} />
-                  <DFITAnalysis  dfit={data?.dfit} />
-                  <StressProfile stressProfile={data?.stress_profile} />
-                </div>
-
-                {/* Row 2: Fracture Geometry | Design Summary | Pumping Schedule | Pressure */}
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1.4fr 1fr', gap: 6, minHeight: 230, flexShrink: 0 }}>
-                  <FractureGeometry   geometry={data?.fracture_geometry} />
-                  <DesignSummary      design={data?.design_summary} />
-                  <PumpingSchedule    schedule={data?.pumping_schedule} />
-                  <PressureComponents pressure={data?.pressure} />
-                </div>
-
-                {/* Row 3: Perforation | Containment | Fault | Uncertainty | Sensitivity */}
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1.1fr 1.3fr', gap: 6, minHeight: 210, flexShrink: 0 }}>
-                  <PerforationCluster  design={data?.design_summary} />
-                  <ContainmentAnalysis containment={data?.containment} />
-                  <FaultInteraction    containment={data?.containment} />
-                  <UncertaintySummary  uncertainty={data?.uncertainty} />
-                  <SensitivityTornado  sensitivity={data?.sensitivity} />
-                </div>
-
-                {/* Row 4: Risk Assessment */}
-                <div style={{ minHeight: 160, flexShrink: 0 }}>
-                  <RiskSection risk={data?.risk} />
-                </div>
-                
-                {/* Row 5: Borehole Stability Engine */}
-                <div style={{ marginTop: 12, paddingTop: 12, borderTop: '2px dashed rgba(255,255,255,0.1)' }}>
-                  <div style={{ fontSize: 13, fontWeight: 800, color: '#f8fafc', marginBottom: 12, padding: '8px 12px', background: 'rgba(56,189,248,0.1)', borderLeft: '3px solid #38bdf8', letterSpacing: '0.05em' }}>
-                    BOREHOLE STABILITY ENGINE (Integrated View)
-                  </div>
-                  <BoreholeStability bhs={data?.bhs} mem={data?.mem} well={data?.well} stressProfile={data?.stress_profile} isNested={true} />
-                </div>
-              </main>
+              <OverviewTab data={data} />
             )}
 
             {/* ─── COMMON MEM: Full-width detail view ─────────────────── */}
