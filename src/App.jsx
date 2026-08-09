@@ -341,7 +341,7 @@ export default function App() {
               </button>
             </div>
           ) : (
-            (activeMenu === 'overview' || activeMenu === 'hydraulic-frac') && <KPIStrip data={data} />
+            activeMenu === 'hydraulic-frac' && <KPIStrip data={data} />
           )}
         </header>
 

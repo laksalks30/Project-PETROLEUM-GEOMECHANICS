@@ -38,17 +38,20 @@ function SectionTitle({ icon: Icon, title, color = '#38bdf8' }) {
 }
 
 export default function OverviewTab({ data }) {
-  const { mem, bhs, well } = data || {}
-  const sp = data?.stress_profile || []
+  // Always render with fallback — do NOT gate on data loading
+  const mem  = data?.mem  || {}
+  const bhs  = data?.bhs  || {}
+  const sp   = data?.stress_profile || []
 
   return (
     <div style={{ flex: 1, overflow: 'auto', padding: '14px 16px', display: 'flex', flexDirection: 'column', gap: 12, background: '#050b14' }}>
 
-      {/* ── SECTION 1: MEM KPI ─────────────────────────────────────────── */}
+      {/* ── SECTION 1: COMMON CALIBRATED MEM SUMMARY ──────────────────── */}
       <div style={{ ...card(), overflow: 'hidden' }}>
-        <div style={{ padding: '10px 16px', borderBottom: '1px solid rgba(255,255,255,0.06)', display: 'flex', alignItems: 'center', gap: 8, background: 'rgba(16,185,129,0.05)' }}>
-          <Layers size={14} color="#10b981" />
-          <span style={{ fontSize: 13, fontWeight: 800, color: '#f8fafc', letterSpacing: '0.06em' }}>COMMON CALIBRATED MEM SUMMARY</span>
+        <div style={{ padding: '12px 18px', borderBottom: '1px solid rgba(255,255,255,0.08)', display: 'flex', alignItems: 'center', gap: 10, background: 'linear-gradient(90deg, rgba(16,185,129,0.12) 0%, transparent 60%)' }}>
+          <Layers size={16} color="#10b981" />
+          <span style={{ fontSize: 14, fontWeight: 900, color: '#f8fafc', letterSpacing: '0.08em' }}>COMMON CALIBRATED MEM SUMMARY</span>
+          <div style={{ marginLeft: 'auto', fontSize: 10, color: '#10b981', background: 'rgba(16,185,129,0.1)', border: '1px solid rgba(16,185,129,0.3)', padding: '2px 8px', borderRadius: 4, fontWeight: 700 }}>MEM-GM01-V1.1</div>
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(6,1fr)', gap: 1, background: 'rgba(255,255,255,0.04)' }}>
           {[
